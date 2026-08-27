@@ -1,0 +1,17 @@
+// RISC-V Test Firmware (32-bit Hex words for IMEM)
+// Address: 0x00400000 (Word Index 0)
+100100b7 // 000: lui  x1, 0x10010       ; Set x1 = 0x10010000 (DMEM Base)
+deadb137 // 004: lui  x2, 0xDEADB       ; Set x2 upper = 0xDEADB000
+eef10113 // 008: addi x2, x2, -273     ; x2 = 0xDEADBEEF
+0020a023 // 00C: sw   x2, 0(x1)         ; Store 0xDEADBEEF to DMEM [0x10010000]
+00209223 // 010: sh   x2, 4(x1)         ; Store 0xBEEF to DMEM [0x10010004]
+00208323 // 014: sb   x2, 6(x1)         ; Store 0xEF to DMEM [0x10010006]
+0000a183 // 018: lw   x3, 0(x1)         ; Load word back into x3 (Expected: 0xDEADBEEF)
+0060c203 // 01C: lbu  x4, 6(x1)         ; Load byte unsign back into x4 (Expected: 0x000000EF)
+004002b7 // 020: lui  x5, 0x00400       ; Set x5 = 0x00400000 (IMEM Base)
+1002a303 // 024: lw   x6, 256(x5)       ; Load word from IMEM offset 0x100 (Expected: 0x0000000A)
+0000006f // 028: jal  x0, 0             ; Spin in infinite loop (End of program)
+
+// Address Jump to Offset 0x100 (Word Index 64 / 0x40 in hex) matching Table 14
+@00000040
+0000000A // 100: Constant Data in IMEM at 0x00400100
