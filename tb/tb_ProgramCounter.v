@@ -19,14 +19,15 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
 module tb_ProgramCounter();
 
-    // Testbench Signals
-    reg         clk;
-    reg         rst_n;
-    reg         PC_sel;
-    reg  [31:0] i_ALU_output;
+    // Testbench Signals driving the DUT inputs must be 'reg' (procedural assignments)
+    reg        clk;
+    reg        rst_n;
+    reg        PC_sel;
+    reg [31:0] i_ALU_output;
+
+    // Testbench Signals monitoring the DUT outputs must be 'wire' (driven by DUT instance)
     wire [31:0] o_PC_Output;
     wire [31:0] o_PC_Plus_4;
 

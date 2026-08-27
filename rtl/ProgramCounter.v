@@ -19,14 +19,16 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
 module ProgramCounter(
-    input [31:0] i_ALU_output,  // Branch / Jump target address input
-    input        PC_sel,        // MUX select control signal (0 = PC+4, 1 = Target)
-    input        clk,
-    input        rst_n,
-    output [31:0] o_PC_Output, 
-    output [31:0] o_PC_Plus_4
+    // Inputs (always wire in module port declarations)
+    input wire [31:0] i_ALU_output,  // Branch / Jump target address input
+    input wire        PC_sel,        // MUX select control signal (0 = PC+4, 1 = Target)
+    input wire        clk,
+    input wire        rst_n,
+
+    // Outputs (wire because they are driven by 'assign' statements below)
+    output wire [31:0] o_PC_Output, 
+    output wire [31:0] o_PC_Plus_4
 );
     localparam c_PC_INITIAL_VALUE = 32'h0040_0000;
 
@@ -45,6 +47,7 @@ module ProgramCounter(
         end
     end
 
+    // Continuous assignments require output signals to be 'wire'
     assign o_PC_Output = r_PC_Output;
     assign o_PC_Plus_4 = r_PC_Output + 4;
 
