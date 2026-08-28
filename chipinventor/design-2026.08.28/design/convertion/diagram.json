@@ -1,0 +1,2000 @@
+{
+    "drawflow": {
+        "Home": {
+            "data": {
+                "1": {
+                    "id": 1,
+                    "name": "blk3198",
+                    "data": {
+                        "blkInputs": "i_ALU_output[31:0], PC_sel, PC_write, clk, rst_n",
+                        "blkOutputs": "o_PC_Output[31:0], o_PC_Plus_4[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3198",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>ProgramCounter</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3198); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3198); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "23",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_6",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_5",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "5",
+                                    "input": "output_1",
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        "input_5": {
+                            "connections": [
+                                {
+                                    "node": "8",
+                                    "input": "output_1",
+                                    "color": "#FF0000"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "3",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "18",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 794.6304931640625,
+                                            "pos_y": -846.8001708984375
+                                        },
+                                        {
+                                            "pos_x": 4762.6307373046875,
+                                            "pos_y": -840.800048828125
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "output_2": {
+                            "connections": [
+                                {
+                                    "node": "9",
+                                    "output": "input_5",
+                                    "points": [
+                                        {
+                                            "pos_x": 802.4789663461538,
+                                            "pos_y": 1046.5691669170674
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 191,
+                    "pos_y": 390.3333333333333
+                },
+                "3": {
+                    "id": 3,
+                    "name": "blk3208",
+                    "data": {
+                        "blkInputs": "pc[31:0], alu_out[31:0], mem_addr_sel",
+                        "blkOutputs": "mem_addr[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3208",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>Memory_Address_MUX</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3208); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3208); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "1",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "6",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_12",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "4",
+                                    "output": "input_6",
+                                    "color": "#0005FF"
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 869,
+                    "pos_y": 401.37931034482756
+                },
+                "4": {
+                    "id": 4,
+                    "name": "blk3196",
+                    "data": {
+                        "blkInputs": "clk, write_enable, read_enable, op_size_o[2:0], core_data_o[31:0], core_address_o[31:0]",
+                        "blkOutputs": "core_data_i[31:0]",
+                        "blkInouts": "",
+                        "parameters": {
+                            "FIRMWARE": "\"firmware.hex\""
+                        }
+                    },
+                    "class": "blk3196",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>MemoryUnit</b></p> \n                      <div class=\"parameters\">\n                        \n                <label>FIRMWARE\n                  <input type=\"text\" df-parameters-FIRMWARE value=\"&quot;firmware.hex&quot;\" name=\"FIRMWARE\" oninput=\"checkParameterInPorts(event)\">\n                </label>\n              \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3196); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3196); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "5",
+                                    "input": "output_1",
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_14",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_13",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_15",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_5": {
+                            "connections": [
+                                {
+                                    "node": "10",
+                                    "input": "output_1",
+                                    "color": "#00FFF9"
+                                }
+                            ]
+                        },
+                        "input_6": {
+                            "connections": [
+                                {
+                                    "node": "3",
+                                    "input": "output_1",
+                                    "color": "#0005FF"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "11",
+                                    "output": "input_4"
+                                },
+                                {
+                                    "node": "26",
+                                    "output": "input_4",
+                                    "points": [
+                                        {
+                                            "pos_x": 2210.0034993489585,
+                                            "pos_y": 866.7327880859375
+                                        },
+                                        {
+                                            "pos_x": 1914.0034993489583,
+                                            "pos_y": 869.399454752604
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 1580.909090909091,
+                    "pos_y": 370
+                },
+                "5": {
+                    "id": 5,
+                    "name": "input",
+                    "data": {
+                        "input_pin": "",
+                        "name101input": "clk"
+                    },
+                    "class": "input",
+                    "html": "\n          <div class=\"box\">\n            <p><b>Input Pin</b></p>\n            <input type=\"text\" df-name101input placeholder=\"\">\n          </div>\n        ",
+                    "typenode": false,
+                    "inputs": {},
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "1",
+                                    "output": "input_4",
+                                    "color": "#000000"
+                                },
+                                {
+                                    "node": "4",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 1470.5267333984377,
+                                            "pos_y": 1618.6375427246094
+                                        }
+                                    ],
+                                    "color": "#000000"
+                                },
+                                {
+                                    "node": "7",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 189.61310135690792,
+                                            "pos_y": -60.18612510279604
+                                        }
+                                    ],
+                                    "color": "#000000"
+                                },
+                                {
+                                    "node": "6",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 2225.5267333984375,
+                                            "pos_y": 1618.6375427246094
+                                        },
+                                        {
+                                            "pos_x": 4923.506184895833,
+                                            "pos_y": 1612.3494466145833
+                                        },
+                                        {
+                                            "pos_x": 5724.839518229166,
+                                            "pos_y": 1611.01611328125
+                                        }
+                                    ],
+                                    "color": "#000000"
+                                },
+                                {
+                                    "node": "11",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 2355.526835123698,
+                                            "pos_y": 1620.3041585286458
+                                        },
+                                        {
+                                            "pos_x": 2345.526835123698,
+                                            "pos_y": 435.30415852864587
+                                        }
+                                    ],
+                                    "color": "#000000"
+                                },
+                                {
+                                    "node": "13",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 3135.9022404597354,
+                                            "pos_y": 1623.9512751652646
+                                        }
+                                    ],
+                                    "color": "#000000"
+                                },
+                                {
+                                    "node": "17",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 3991.9973754882803,
+                                            "pos_y": 1613.4951972961426
+                                        }
+                                    ],
+                                    "color": "#000000"
+                                },
+                                {
+                                    "node": "10",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 3981.9973754882803,
+                                            "pos_y": 1612.2451782226562
+                                        }
+                                    ],
+                                    "color": "#000000"
+                                },
+                                {
+                                    "node": "26",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 1989.907090928819,
+                                            "pos_y": 1623.1703355577256
+                                        }
+                                    ],
+                                    "color": "#000000"
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": -349.6666666666667,
+                    "pos_y": 1569
+                },
+                "6": {
+                    "id": 6,
+                    "name": "blk3205",
+                    "data": {
+                        "blkInputs": "clk, rst_n, alu_write, alu_q[31:0]",
+                        "blkOutputs": "alu_out[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3205",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>ALU_OUT_Register</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3205); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3205); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "5",
+                                    "input": "output_1",
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "8",
+                                    "input": "output_1",
+                                    "color": "#FF0000"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_3",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "18",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "3",
+                                    "output": "input_2",
+                                    "points": [
+                                        {
+                                            "pos_x": 6407.046120383522,
+                                            "pos_y": 666.6719748757102
+                                        },
+                                        {
+                                            "pos_x": 6401.591574928976,
+                                            "pos_y": -316.9643887606533
+                                        },
+                                        {
+                                            "pos_x": 3248.8313075474334,
+                                            "pos_y": -319.82090541294633
+                                        },
+                                        {
+                                            "pos_x": 785.97412109375,
+                                            "pos_y": -319.8210797991071
+                                        },
+                                        {
+                                            "pos_x": 785.97412109375,
+                                            "pos_y": 494.4646344866071
+                                        }
+                                    ]
+                                },
+                                {
+                                    "node": "23",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "9",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 6363.893821022727,
+                                            "pos_y": 670.4552667791193
+                                        },
+                                        {
+                                            "pos_x": 6385.712002840909,
+                                            "pos_y": 970.4552667791193
+                                        },
+                                        {
+                                            "pos_x": 2652.984730113636,
+                                            "pos_y": 899.546231356534
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 5833,
+                    "pos_y": 571.0952380952381
+                },
+                "7": {
+                    "id": 7,
+                    "name": "blk3189",
+                    "data": {
+                        "blkInputs": "clk, rst_n, instruction[31:0], branch_taken",
+                        "blkOutputs": "ir_write, ab_write, alu_write, mdr_write, pc_write, pc_sel, reg_write, wb_sel[2:0], alu_control[3:0], a_sel, b_sel, mem_addr_sel, mem_read, mem_write, op_size[2:0], mult_sel[3:0], crc_sel[1:0], branch_sel[2:0], halt, state[3:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3189",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>ControlUnit</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3189); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3189); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "5",
+                                    "input": "output_1",
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "8",
+                                    "input": "output_1",
+                                    "color": "#FF0000"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "11",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "19",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "11",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 2389.542048527644,
+                                            "pos_y": -217.65775240384613
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_2": {
+                            "connections": [
+                                {
+                                    "node": "17",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 3925.2177845348015,
+                                            "pos_y": -200.585604580966
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                },
+                                {
+                                    "node": "10",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 3924.009076286765,
+                                            "pos_y": -200.99638097426475
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_3": {
+                            "connections": [
+                                {
+                                    "node": "6",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 5784.891468394886,
+                                            "pos_y": -173.67942116477263
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_4": {
+                            "connections": [
+                                {
+                                    "node": "26",
+                                    "output": "input_3",
+                                    "color": "#00FF0D",
+                                    "points": [
+                                        {
+                                            "pos_x": 2033.8478227095168,
+                                            "pos_y": -157.52069646661937
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "output_5": {
+                            "connections": [
+                                {
+                                    "node": "1",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 1992.7711245888163,
+                                            "pos_y": -141.23872455797704
+                                        },
+                                        {
+                                            "pos_x": 1995.9290193256584,
+                                            "pos_y": 249.28759123149666
+                                        },
+                                        {
+                                            "pos_x": 94.87638774671052,
+                                            "pos_y": 249.28759123149666
+                                        },
+                                        {
+                                            "pos_x": 86.45533511513156,
+                                            "pos_y": 484.0244333367599
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_6": {
+                            "connections": [
+                                {
+                                    "node": "1",
+                                    "output": "input_2",
+                                    "points": [
+                                        {
+                                            "pos_x": 1694.148030598958,
+                                            "pos_y": -118.23453776041674
+                                        },
+                                        {
+                                            "pos_x": 1700.814697265625,
+                                            "pos_y": -462.2345377604167
+                                        },
+                                        {
+                                            "pos_x": 114.14803059895826,
+                                            "pos_y": -459.56787109375
+                                        },
+                                        {
+                                            "pos_x": 134.14803059895826,
+                                            "pos_y": 460.43212890625
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_7": {
+                            "connections": [
+                                {
+                                    "node": "13",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 3278.455674913195,
+                                            "pos_y": -100.38302951388891
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_8": {
+                            "connections": [
+                                {
+                                    "node": "9",
+                                    "output": "input_6",
+                                    "points": [
+                                        {
+                                            "pos_x": 1809.8200988769531,
+                                            "pos_y": -83.23715209960938
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_9": {
+                            "connections": [
+                                {
+                                    "node": "18",
+                                    "output": "input_5",
+                                    "points": [
+                                        {
+                                            "pos_x": 4739.971749441965,
+                                            "pos_y": -59.783150809151834
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_10": {
+                            "connections": [
+                                {
+                                    "node": "18",
+                                    "output": "input_6",
+                                    "points": [
+                                        {
+                                            "pos_x": 4678.903521369485,
+                                            "pos_y": -39.74494485294122
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_11": {
+                            "connections": [
+                                {
+                                    "node": "18",
+                                    "output": "input_7",
+                                    "points": [
+                                        {
+                                            "pos_x": 4709.507988823785,
+                                            "pos_y": -16.117350260416742
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_12": {
+                            "connections": [
+                                {
+                                    "node": "3",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 1670.480929287997,
+                                            "pos_y": 0.814153497869313
+                                        },
+                                        {
+                                            "pos_x": 1670.480929287997,
+                                            "pos_y": 325.35958030007095
+                                        },
+                                        {
+                                            "pos_x": 804.1172929243608,
+                                            "pos_y": 325.3596080433238
+                                        },
+                                        {
+                                            "pos_x": 808.6627474698153,
+                                            "pos_y": 513.541398481889
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_13": {
+                            "connections": [
+                                {
+                                    "node": "4",
+                                    "output": "input_3",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_14": {
+                            "connections": [
+                                {
+                                    "node": "4",
+                                    "output": "input_2",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_15": {
+                            "connections": [
+                                {
+                                    "node": "4",
+                                    "output": "input_4",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_16": {
+                            "connections": [
+                                {
+                                    "node": "20",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 4650.847778320312,
+                                            "pos_y": 81.01740056818176
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_17": {
+                            "connections": [
+                                {
+                                    "node": "21",
+                                    "output": "input_3",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_18": {
+                            "connections": [
+                                {
+                                    "node": "19",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 4634.520089285715,
+                                            "pos_y": 119.69395228794633
+                                        }
+                                    ],
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "output_19": {
+                            "connections": [
+                                {
+                                    "node": "24",
+                                    "output": "input_1"
+                                }
+                            ]
+                        },
+                        "output_20": {
+                            "connections": []
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 986.9230769230769,
+                    "pos_y": -231
+                },
+                "8": {
+                    "id": 8,
+                    "name": "input",
+                    "data": {
+                        "input_pin": "",
+                        "name101input": "rst_n"
+                    },
+                    "class": "input",
+                    "html": "\n          <div class=\"box\">\n            <p><b>Input Pin</b></p>\n            <input type=\"text\" df-name101input placeholder=\"\">\n          </div>\n        ",
+                    "typenode": false,
+                    "inputs": {},
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "output": "input_2",
+                                    "points": [
+                                        {
+                                            "pos_x": 220.13954564144728,
+                                            "pos_y": -40.18609297902958
+                                        }
+                                    ],
+                                    "color": "#FF0000"
+                                },
+                                {
+                                    "node": "1",
+                                    "output": "input_5",
+                                    "points": [
+                                        {
+                                            "pos_x": 8.860066731770758,
+                                            "pos_y": 1720.304209391276
+                                        }
+                                    ],
+                                    "color": "#FF0000"
+                                },
+                                {
+                                    "node": "11",
+                                    "output": "input_2",
+                                    "points": [
+                                        {
+                                            "pos_x": 2335.526835123698,
+                                            "pos_y": 1721.9708760579429
+                                        }
+                                    ],
+                                    "color": "#FF0000"
+                                },
+                                {
+                                    "node": "13",
+                                    "output": "input_2",
+                                    "points": [
+                                        {
+                                            "pos_x": 3187.781032986111,
+                                            "pos_y": 1729.421929253472
+                                        }
+                                    ],
+                                    "color": "#FF0000"
+                                },
+                                {
+                                    "node": "6",
+                                    "output": "input_2",
+                                    "points": [
+                                        {
+                                            "pos_x": 5760.839518229166,
+                                            "pos_y": 1731.01611328125
+                                        }
+                                    ],
+                                    "color": "#FF0000"
+                                },
+                                {
+                                    "node": "17",
+                                    "output": "input_2",
+                                    "points": [
+                                        {
+                                            "pos_x": 4053.2473754882803,
+                                            "pos_y": 1730.9951782226562
+                                        }
+                                    ],
+                                    "color": "#FF0000"
+                                },
+                                {
+                                    "node": "10",
+                                    "output": "input_2",
+                                    "points": [
+                                        {
+                                            "pos_x": 4054.4973754882803,
+                                            "pos_y": 1732.24515914917
+                                        }
+                                    ],
+                                    "color": "#FF0000"
+                                },
+                                {
+                                    "node": "26",
+                                    "output": "input_2",
+                                    "points": [
+                                        {
+                                            "pos_x": 1923.2404242621524,
+                                            "pos_y": 1732.0592244466143
+                                        }
+                                    ],
+                                    "color": "#FF0000"
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": -343,
+                    "pos_y": 1672
+                },
+                "9": {
+                    "id": 9,
+                    "name": "blk3207",
+                    "data": {
+                        "blkInputs": "alu_out[31:0], mdr[31:0], mult_result[31:0], crc_result[31:0], pc_plus4[31:0], wb_sel[2:0]",
+                        "blkOutputs": "wb_data[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3207",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>WB_MUX</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3207); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3207); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "6",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "26",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "20",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "21",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_5": {
+                            "connections": [
+                                {
+                                    "node": "1",
+                                    "input": "output_2"
+                                }
+                            ]
+                        },
+                        "input_6": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_8",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "13",
+                                    "output": "input_4"
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 2721,
+                    "pos_y": 916
+                },
+                "10": {
+                    "id": 10,
+                    "name": "blk3204",
+                    "data": {
+                        "blkInputs": "clk, rst_n, ab_write, rs2_data[31:0]",
+                        "blkOutputs": "B[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3204",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>B_Register</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3204); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3204); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "5",
+                                    "input": "output_1",
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "8",
+                                    "input": "output_1",
+                                    "color": "#FF0000"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_2",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "13",
+                                    "input": "output_2"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "4",
+                                    "output": "input_5",
+                                    "points": [
+                                        {
+                                            "pos_x": 4674.204269935345,
+                                            "pos_y": 492.01049804687494
+                                        },
+                                        {
+                                            "pos_x": 4671.873779296875,
+                                            "pos_y": -513.9364346590909
+                                        },
+                                        {
+                                            "pos_x": 1535.5101429332385,
+                                            "pos_y": -513.9364346590909
+                                        }
+                                    ],
+                                    "color": "#00FFF9"
+                                },
+                                {
+                                    "node": "21",
+                                    "output": "input_2"
+                                },
+                                {
+                                    "node": "19",
+                                    "output": "input_2"
+                                },
+                                {
+                                    "node": "18",
+                                    "output": "input_2"
+                                },
+                                {
+                                    "node": "20",
+                                    "output": "input_2"
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 4113.379310344828,
+                    "pos_y": 397
+                },
+                "11": {
+                    "id": 11,
+                    "name": "blk3202",
+                    "data": {
+                        "blkInputs": "clk, rst_n, ir_write, mem_rdata[31:0]",
+                        "blkOutputs": "ir[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3202",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>IR_Register</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3202); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3202); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "5",
+                                    "input": "output_1",
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "8",
+                                    "input": "output_1",
+                                    "color": "#FF0000"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_1",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "4",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "13",
+                                    "output": "input_5"
+                                },
+                                {
+                                    "node": "25",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "7",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 3048.114624023438,
+                                            "pos_y": -412.5642903645835
+                                        },
+                                        {
+                                            "pos_x": 891.448160807292,
+                                            "pos_y": -409.23095703125
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 2485,
+                    "pos_y": 374.1111111111111
+                },
+                "13": {
+                    "id": 13,
+                    "name": "blk3199",
+                    "data": {
+                        "blkInputs": "clk, rst_n, reg_write, reg_rd_data[31:0], instruction[31:0]",
+                        "blkOutputs": "reg_rs_1_data[31:0], reg_rs_2_data[31:0]",
+                        "blkInouts": "",
+                        "parameters": {
+                            "DATA_MEM_SIZE": "8192"
+                        }
+                    },
+                    "class": "blk3199",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>RegisterFile</b></p> \n                      <div class=\"parameters\">\n                        \n                <label>DATA_MEM_SIZE\n                  <input type=\"text\" df-parameters-DATA_MEM_SIZE value=\"2**10\" name=\"DATA_MEM_SIZE\" oninput=\"checkParameterInPorts(event)\">\n                </label>\n              \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3199); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3199); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "5",
+                                    "input": "output_1",
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "8",
+                                    "input": "output_1",
+                                    "color": "#FF0000"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_7",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "9",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_5": {
+                            "connections": [
+                                {
+                                    "node": "11",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "17",
+                                    "output": "input_4"
+                                }
+                            ]
+                        },
+                        "output_2": {
+                            "connections": [
+                                {
+                                    "node": "10",
+                                    "output": "input_4"
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 3412,
+                    "pos_y": 301.57142857142856
+                },
+                "17": {
+                    "id": 17,
+                    "name": "blk3203",
+                    "data": {
+                        "blkInputs": "clk, rst_n, ab_write, rs1_data[31:0]",
+                        "blkOutputs": "A[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3203",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>A_Register</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3203); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3203); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "5",
+                                    "input": "output_1",
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "8",
+                                    "input": "output_1",
+                                    "color": "#FF0000"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_2",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "13",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "18",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "21",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "19",
+                                    "output": "input_1"
+                                },
+                                {
+                                    "node": "20",
+                                    "output": "input_1"
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 4112.666666666667,
+                    "pos_y": 180
+                },
+                "18": {
+                    "id": 18,
+                    "name": "blk3187",
+                    "data": {
+                        "blkInputs": "reg_rs_1[31:0], reg_rs_2[31:0], pc_output[31:0], immediate[31:0], ALU_control[3:0], A_sel, B_sel",
+                        "blkOutputs": "Q[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3187",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>ALU</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3187); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3187); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "17",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "10",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "1",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "25",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_5": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_9",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_6": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_10",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_7": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_11",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "6",
+                                    "output": "input_4"
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 4885.666666666667,
+                    "pos_y": 446
+                },
+                "19": {
+                    "id": 19,
+                    "name": "blk3188",
+                    "data": {
+                        "blkInputs": "reg_rs_1[31:0], reg_rs_2[31:0], Branch_Sel[2:0]",
+                        "blkOutputs": "o_Branch_Taken",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3188",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>BranchComparator</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3188); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3188); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "17",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "10",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_18",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "output": "input_4",
+                                    "points": [
+                                        {
+                                            "pos_x": 5582.937644675925,
+                                            "pos_y": 275.2154314959491
+                                        },
+                                        {
+                                            "pos_x": 5586.64134837963,
+                                            "pos_y": 154.47469075520831
+                                        },
+                                        {
+                                            "pos_x": 876.6974748883929,
+                                            "pos_y": 218.85951450892856
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 4876.090909090909,
+                    "pos_y": 181
+                },
+                "20": {
+                    "id": 20,
+                    "name": "blk3197",
+                    "data": {
+                        "blkInputs": "reg_rs_1[31:0], reg_rs_2[31:0], mult_sel[3:0]",
+                        "blkOutputs": "rd[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3197",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>Multiplier</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3197); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3197); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "17",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "10",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_16",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "9",
+                                    "output": "input_3",
+                                    "points": [
+                                        {
+                                            "pos_x": 5541.083139272836,
+                                            "pos_y": 833.7472299429088
+                                        },
+                                        {
+                                            "pos_x": 5545.698523888221,
+                                            "pos_y": 1179.9010760967549
+                                        },
+                                        {
+                                            "pos_x": 2591.8523700420674,
+                                            "pos_y": 1179.9010760967549
+                                        },
+                                        {
+                                            "pos_x": 2603.203582763672,
+                                            "pos_y": 999.9797058105469
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 4888.6,
+                    "pos_y": 739
+                },
+                "21": {
+                    "id": 21,
+                    "name": "blk3190",
+                    "data": {
+                        "blkInputs": "reg_rs_1[31:0], reg_rs_2[31:0], crc_sel[1:0]",
+                        "blkOutputs": "rd[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3190",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>CRC</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3190); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3190); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "17",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "10",
+                                    "input": "output_1"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_17",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "9",
+                                    "output": "input_4",
+                                    "points": [
+                                        {
+                                            "pos_x": 5508.826293945312,
+                                            "pos_y": 11.408576965332031
+                                        },
+                                        {
+                                            "pos_x": 5516.326293945312,
+                                            "pos_y": 1151.408576965332
+                                        },
+                                        {
+                                            "pos_x": 2625.076293945312,
+                                            "pos_y": 1152.6586151123047
+                                        },
+                                        {
+                                            "pos_x": 2631.953582763672,
+                                            "pos_y": 1019.9797058105469
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 4879.181818181818,
+                    "pos_y": -82
+                },
+                "23": {
+                    "id": 23,
+                    "name": "blk3211",
+                    "data": {
+                        "blkInputs": "alu_out[31:0]",
+                        "blkOutputs": "pc_target[31:0]",
+                        "blkInouts": "",
+                        "parameters": {}
+                    },
+                    "class": "blk3211",
+                    "html": "\n    <div class=\"box\">\n      <center>\n        <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' src=\"/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png\" width=\"100\">\n        <br>\n        <p><b>PC_Target_Align</b></p>\n        <div class=\"parameters\">\n          \n        </div>\n        <a href=\"#\" onclick=\"showInfoModal('Block', 3211); return false;\">[info]</a> \n        <a href=\"#\" onclick=\"showDetailsModal('Block', 3211); return false;\">[details]</a>\n      </center>\n    </div>\n  ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "6",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "1",
+                                    "output": "input_1",
+                                    "points": [
+                                        {
+                                            "pos_x": 7200.346374511719,
+                                            "pos_y": -771.7437744140625
+                                        },
+                                        {
+                                            "pos_x": 135.12433733258945,
+                                            "pos_y": -766.4728655133927
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 6503,
+                    "pos_y": -655
+                },
+                "24": {
+                    "id": 24,
+                    "name": "output",
+                    "data": {
+                        "output_pin": "",
+                        "name101output": "o_halt"
+                    },
+                    "class": "output",
+                    "html": "\n          <div class=\"box\">\n            <p><b>Output pin</b></p>\n            <input type=\"text\" df-name101output placeholder=\"\">\n          </div>\n        ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_19"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {},
+                    "inouts": {},
+                    "pos_x": 1706,
+                    "pos_y": 114.18181818181819
+                },
+                "25": {
+                    "id": 25,
+                    "name": "blk3194",
+                    "data": {
+                        "blkInputs": "instruction[31:0]",
+                        "blkOutputs": "extended_immediate[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3194",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>ImmediateGenerator</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3194); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3194); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "11",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "18",
+                                    "output": "input_4",
+                                    "points": [
+                                        {
+                                            "pos_x": 4589.223345588236,
+                                            "pos_y": 740.8465217141545
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 3392.823529411765,
+                    "pos_y": 646
+                },
+                "26": {
+                    "id": 26,
+                    "name": "blk3206",
+                    "data": {
+                        "blkInputs": "clk, rst_n, mdr_write, mem_rdata[31:0]",
+                        "blkOutputs": "mdr[31:0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3206",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img onload='updateConnectionList(editor.drawflow)' onload='updateConnectionList(editor.drawflow)' draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>MDR_Register</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3206); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3206); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": [
+                                {
+                                    "node": "5",
+                                    "input": "output_1",
+                                    "color": "#000000"
+                                }
+                            ]
+                        },
+                        "input_2": {
+                            "connections": [
+                                {
+                                    "node": "8",
+                                    "input": "output_1",
+                                    "color": "#FF0000"
+                                }
+                            ]
+                        },
+                        "input_3": {
+                            "connections": [
+                                {
+                                    "node": "7",
+                                    "input": "output_4",
+                                    "color": "#00FF0D"
+                                }
+                            ]
+                        },
+                        "input_4": {
+                            "connections": [
+                                {
+                                    "node": "4",
+                                    "input": "output_1"
+                                }
+                            ]
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": [
+                                {
+                                    "node": "9",
+                                    "output": "input_2"
+                                }
+                            ]
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 2098,
+                    "pos_y": 1208.1764705882354
+                },
+                "27": {
+                    "id": 27,
+                    "name": "blk3186",
+                    "data": {
+                        "blkInputs": "addr_i[31:0], read_enable_i, write_enable_i, bw_i[3:0]",
+                        "blkOutputs": "imem_addr_o[31:0], imem_read_en_o, dmem_addr_o[31:0], dmem_read_en_o, dmem_write_en_o, dmem_bw_o[3:0], addr_decoder_sel",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3186",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>AddressDecoder</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3186); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3186); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": []
+                        },
+                        "input_2": {
+                            "connections": []
+                        },
+                        "input_3": {
+                            "connections": []
+                        },
+                        "input_4": {
+                            "connections": []
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": []
+                        },
+                        "output_2": {
+                            "connections": []
+                        },
+                        "output_3": {
+                            "connections": []
+                        },
+                        "output_4": {
+                            "connections": []
+                        },
+                        "output_5": {
+                            "connections": []
+                        },
+                        "output_6": {
+                            "connections": []
+                        },
+                        "output_7": {
+                            "connections": []
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 3564,
+                    "pos_y": 1947.6666666666667
+                },
+                "28": {
+                    "id": 28,
+                    "name": "blk3192",
+                    "data": {
+                        "blkInputs": "clk, dmem_addr[31:0], dmem_data_i[31:0], bw[3:0], write_enable, read_enable",
+                        "blkOutputs": "dmem_output[31:0]",
+                        "blkInouts": "",
+                        "parameters": {
+                            "WORDS": "2048"
+                        }
+                    },
+                    "class": "blk3192",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>DMEM</b></p> \n                      <div class=\"parameters\">\n                        \n                <label>WORDS\n                  <input type=\"text\" df-parameters-WORDS value=\"2048\" name=\"WORDS\" oninput=\"checkParameterInPorts(event)\">\n                </label>\n              \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3192); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3192); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": []
+                        },
+                        "input_2": {
+                            "connections": []
+                        },
+                        "input_3": {
+                            "connections": []
+                        },
+                        "input_4": {
+                            "connections": []
+                        },
+                        "input_5": {
+                            "connections": []
+                        },
+                        "input_6": {
+                            "connections": []
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": []
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 4114.894736842105,
+                    "pos_y": 1928
+                },
+                "29": {
+                    "id": 29,
+                    "name": "blk3193",
+                    "data": {
+                        "blkInputs": "clk, imem_addr[31:0], read_enable",
+                        "blkOutputs": "imem_output[31:0]",
+                        "blkInouts": "",
+                        "parameters": {
+                            "WORDS": "1048576",
+                            "FIRMWARE": "\"firmware.hex\""
+                        }
+                    },
+                    "class": "blk3193",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>IMEM</b></p> \n                      <div class=\"parameters\">\n                        \n                <label>WORDS\n                  <input type=\"text\" df-parameters-WORDS value=\"1048576\" name=\"WORDS\" oninput=\"checkParameterInPorts(event)\">\n                </label>\n              \n                <label>FIRMWARE\n                  <input type=\"text\" df-parameters-FIRMWARE value=\"&quot;firmware.hex&quot;\" name=\"FIRMWARE\" oninput=\"checkParameterInPorts(event)\">\n                </label>\n              \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3193); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3193); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": []
+                        },
+                        "input_2": {
+                            "connections": []
+                        },
+                        "input_3": {
+                            "connections": []
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": []
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 3456.9473684210525,
+                    "pos_y": 2188.0526315789475
+                },
+                "30": {
+                    "id": 30,
+                    "name": "blk3191",
+                    "data": {
+                        "blkInputs": "crc_in[CRC_SIZE - 1 : 0], data_i[DATA_WIDTH - 1 : 0]",
+                        "blkOutputs": "crc_o[CRC_SIZE - 1 : 0]",
+                        "blkInouts": "",
+                        "parameters": []
+                    },
+                    "class": "blk3191",
+                    "html": "\n                  <div class=\"box\">\n                    <center>\n                      <img draggable=\"false\" style=\"user-select: none;\" onmousedown=\"return false;\" src=/beta/v1/admin/crud/assets/uploads/files/blockIcon-default.png width=100>\n                      <p><b>crc_calc</b></p> \n                      <div class=\"parameters\">\n                        \n                      </div>\n                      <a href=\"#\" onclick=\"showInfoModal('Block', 3191); return false;\"> [info]</a> \n                      <a href=\"#\" onclick=\"showDetailsModal('Block', 3191); return false;\"> [details]</a>\n                    </center> \n                  </div>\n                ",
+                    "typenode": false,
+                    "inputs": {
+                        "input_1": {
+                            "connections": []
+                        },
+                        "input_2": {
+                            "connections": []
+                        }
+                    },
+                    "outputs": {
+                        "output_1": {
+                            "connections": []
+                        }
+                    },
+                    "inouts": {},
+                    "pos_x": 4089.7894736842104,
+                    "pos_y": 2265
+                }
+            }
+        }
+    }
+}
