@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`default_nettype none
 /* Control Unit for RISCV Multi Cycle
 will add more stuff here
 
@@ -12,7 +13,43 @@ alu already defines:
 alu_a_sel_o: 0=registered rs1, 1=current PC
 alu_b_sel_o: 0=registered rs2, 1=extended immediate
 
-reset is active low */
+reset is active low
+
+!!!!!!!!!!!!!TODO!!!!!!!!!!!!!!!!
+ADD NEW MODULES IN GIT:
+InstructionRegister for mem/LSU read result: o_ir_write
+OperandRegisters for rs1 and rs2 data: o_operand_write
+ALUOutRegister for execution result mux output: o_aluout_write
+MemDataRegister for LSU formatted load data: o_mdr_write
+
+MODULES TO FIX: 
+ProgramCounter cannot update on every clock for multicycle design, must remain unchanged
+when instruction is being decoded and executed
+
+DMEM needs to have sync read
+
+FOR TOP V:
+will add stuff here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ */
 
 module ControlUnit (
     input wire          clk
@@ -50,10 +87,15 @@ module ControlUnit (
   , output reg          o_mem_write
   , output reg [2:0]    o_lsu_op
 
+  // mult/crc/branch controls
+  , output reg [3:0]    o_mult_sel
+  , output reg [1:0]    o_crc_sel
+  , output reg [2:0]    o_branch_sel
+
   // extension/comparator controls
   , output reg          o_halt
   , output reg          o_illegal
-  , output reg          o_state
+  , output wire [5:0]   o_state
 );
   // 
   //  Instruction fields and opcodes    
@@ -61,9 +103,9 @@ module ControlUnit (
 
   wire [6:0] opcode = i_instruction[6:0];
   wire [2:0] funct3 = i_instruction[14:12];
-  wire [6:0] funct7 = i_instructiion[31:25];
+  wire [6:0] funct7 = i_instruction[31:25];
 
-  , output reg OP_LOAD = 7'b0000011;
+   localparam [6:0] OP_LOAD = 7'b0000011;
    localparam [6:0] OP_FENCE  = 7'b0001111;
    localparam [6:0] OP_IMM    = 7'b0010011;
    localparam [6:0] OP_AUIPC  = 7'b0010111;
@@ -137,7 +179,7 @@ module ControlUnit (
     reg [5:0] state_q;
     reg [5:0] state_d;
 
-    assign state_o = state_q;
+    assign o_state = state_q;
   
   // 
   // decode helpers
@@ -283,6 +325,8 @@ module ControlUnit (
                         if ((funct7 == 7'b0000001) && (funct3 <= 3'b011))
                             state_d = ST_EXEC_MUL;
                         else if ((funct7 == 7'b1000000) && (funct3 <= 3'b010))
+                            state_d = ST_EXEC_CRC;
+                        else if (valid_base_reg(funct3, funct7))
                             state_d = ST_EXEC_REG;
                         else
                             state_d = ST_ILLEGAL;
@@ -312,8 +356,8 @@ module ControlUnit (
 
                     OP_SYSTEM: begin
                         // Ecall and Ebreak enters HALT state
-                        if ((instruction_i == 32'h00000073) ||
-                            (instruction_i == 32'h00100073))
+                        if ((i_instruction == 32'h00000073) ||
+                            (i_instruction == 32'h00100073))
                             state_d = ST_HALT;
                         else
                             state_d = ST_ILLEGAL;
@@ -359,204 +403,203 @@ module ControlUnit (
     //
 
      always @(*) begin
-        pc_write_o          = 1'b0;
-        ir_write_o          = 1'b0;
-        operand_write_o     = 1'b0;
-        aluout_write_o      = 1'b0;
-        mdr_write_o         = 1'b0;
-        reg_write_o         = 1'b0;
+        o_pc_write          = 1'b0;
+        o_ir_write          = 1'b0;
+        o_operand_write     = 1'b0;
+        o_aluout_write      = 1'b0;
+        o_mdr_write         = 1'b0;
+        o_reg_write         = 1'b0;
 
-        pc_sel_o            = 1'b0;
-        pc_lsb_clear_o      = 1'b0;
+        o_pc_sel            = 1'b0;
+        o_pc_lsb_clear      = 1'b0;
 
-        alu_a_sel_o         = 1'b0;
-        alu_b_sel_o         = 1'b0;
-        alu_control_o       = ALU_ADD;
+        o_alu_a_sel         = 1'b0;
+        o_alu_b_sel         = 1'b0;
+        o_alu_control       = ALU_ADD;
 
-        exec_result_sel_o   = EXEC_ALU;
-        wb_sel_o            = WB_ALUOUT;
-        mem_addr_sel_o      = 1'b0;
+        o_exec_result_sel   = EXEC_ALU;
+        o_wb_sel            = WB_ALUOUT;
+        o_mem_addr_sel      = 1'b0;
 
-        mem_read_o          = 1'b0;
-        mem_write_o         = 1'b0;
-        lsu_op_o            = LSU_LW;
+        o_mem_read          = 1'b0;
+        o_mem_write         = 1'b0;
+        o_lsu_op            = LSU_LW;
 
-        mult_sel_o          = 4'h0;
-        crc_sel_o           = 2'b00;
-        branch_sel_o        = funct3;
+        o_mult_sel           = 4'h0;
+        o_crc_sel            = 2'b00;
+        o_branch_sel         = funct3;
 
-        halt_o              = 1'b0;
-        illegal_o           = 1'b0;
+        o_halt               = 1'b0;
+        o_illegal            = 1'b0;
 
         case (state_q)
-            ST_FETCH: begin
-                mem_addr_sel_o = 1'b0;       // current PC
-                mem_read_o     = 1'b1;
-                lsu_op_o       = LSU_LW;     // pass complete IMEM word
-                ir_write_o     = 1'b1;
-            end
+        ST_FETCH: begin
+            o_mem_addr_sel = 1'b0;       // current PC
+            o_mem_read     = 1'b1;
+            o_lsu_op       = LSU_LW;     // pass complete IMEM word
+            o_ir_write     = 1'b1;
+        end
 
-            ST_DECODE: begin
-                operand_write_o = 1'b1;      // Capture both rs1 and rs2
-            end
+        ST_DECODE: begin
+        o_operand_write = 1'b1;      // capture both rs1 and rs2
+        end
 
-            ST_EXEC_REG: begin
-                alu_a_sel_o       = 1'b0;
-                alu_b_sel_o       = 1'b0;
-                alu_control_o     = decode_base_alu(funct3, funct7);
-                exec_result_sel_o = EXEC_ALU;
-                aluout_write_o    = 1'b1;
-            end
+        ST_EXEC_REG: begin
+            o_alu_a_sel       = 1'b0;
+            o_alu_b_sel       = 1'b0;
+            o_alu_control     = decode_base_alu(funct3, funct7);
+            o_exec_result_sel = EXEC_ALU;
+            o_aluout_write    = 1'b1;
+        end
 
-            ST_EXEC_IMM: begin
-                alu_a_sel_o       = 1'b0;
-                alu_b_sel_o       = 1'b1;
-                alu_control_o     = decode_imm_alu(funct3, funct7);
-                exec_result_sel_o = EXEC_ALU;
-                aluout_write_o    = 1'b1;
-            end
+        ST_EXEC_IMM: begin
+            o_alu_a_sel       = 1'b0;
+            o_alu_b_sel       = 1'b1;
+            o_alu_control     = decode_imm_alu(funct3, funct7);
+            o_exec_result_sel = EXEC_ALU;
+            o_aluout_write    = 1'b1;
+        end
 
-            ST_EXEC_MUL: begin
-                mult_sel_o        = {1'b0, funct3};
-                exec_result_sel_o = EXEC_MUL;
-                aluout_write_o    = 1'b1;
-            end
+        ST_EXEC_MUL: begin
+            o_mult_sel        = {1'b0, funct3};
+            o_exec_result_sel = EXEC_MUL;
+            o_aluout_write    = 1'b1;
+        end
 
-            ST_EXEC_CRC: begin
-                crc_sel_o         = funct3[1:0];
-                exec_result_sel_o = EXEC_CRC;
-                aluout_write_o    = 1'b1;
-            end
+        ST_EXEC_CRC: begin
+            o_crc_sel         = funct3[1:0];
+            o_exec_result_sel = EXEC_CRC;
+            o_aluout_write    = 1'b1;
+        end
 
-            ST_EXEC_LUI: begin
-                alu_b_sel_o       = 1'b1;
-                alu_control_o     = ALU_PASS_B;
-                exec_result_sel_o = EXEC_ALU;
-                aluout_write_o    = 1'b1;
-            end
+        ST_EXEC_LUI: begin
+            o_alu_b_sel       = 1'b1;
+            o_alu_control     = ALU_PASS_B;
+            o_exec_result_sel = EXEC_ALU;
+            o_aluout_write    = 1'b1;
+        end
 
-            ST_EXEC_AUIPC: begin
-                alu_a_sel_o       = 1'b1;    // current instruction PC
-                alu_b_sel_o       = 1'b1;    // uimm
-                alu_control_o     = ALU_ADD;
-                exec_result_sel_o = EXEC_ALU;
-                aluout_write_o    = 1'b1;
-            end
+        ST_EXEC_AUIPC: begin
+            o_alu_a_sel       = 1'b1;    // current instruction PC
+            o_alu_b_sel       = 1'b1;    // U-immediate
+            o_alu_control     = ALU_ADD;
+            o_exec_result_sel = EXEC_ALU;
+            o_aluout_write    = 1'b1;
+        end
 
-            ST_EXEC_MEM_ADDR: begin
-                alu_a_sel_o       = 1'b0;    // rs1
-                alu_b_sel_o       = 1'b1;    // load/store immediate
-                alu_control_o     = ALU_ADD;
-                exec_result_sel_o = EXEC_ALU;
-                aluout_write_o    = 1'b1;
-            end
+        ST_EXEC_MEM_ADDR: begin
+            o_alu_a_sel       = 1'b0;    // rs1
+            o_alu_b_sel       = 1'b1;    // load/store immediate
+            o_alu_control     = ALU_ADD;
+            o_exec_result_sel = EXEC_ALU;
+            o_aluout_write    = 1'b1;
+        end
 
-            ST_LOAD_REQUEST: begin
-                mem_addr_sel_o = 1'b1;       // ALUOut effective addr
-                mem_read_o     = 1'b1;
-                lsu_op_o       = decode_lsu(opcode, funct3);
-            end
+        ST_LOAD_REQUEST: begin
+            o_mem_addr_sel = 1'b1;       // ALUOut effective addr
+            o_mem_read     = 1'b1;
+            o_lsu_op       = decode_lsu(opcode, funct3);
+        end
 
-            ST_LOAD_CAPTURE: begin
-                // works for both combinational and sync read DMEM, mdr captures response by prev req cycle
-                mem_addr_sel_o = 1'b1;
-                mem_read_o     = 1'b1;
-                lsu_op_o       = decode_lsu(opcode, funct3);
-                mdr_write_o    = 1'b1;
-            end
+        ST_LOAD_CAPTURE: begin
+            o_mem_addr_sel = 1'b1;
+            o_mem_read     = 1'b1;
+            o_lsu_op       = decode_lsu(opcode, funct3);
+            o_mdr_write    = 1'b1;
+        end
 
-            ST_LOAD_WB: begin
-                wb_sel_o    = WB_MDR;
-                reg_write_o = 1'b1;
-                pc_sel_o    = 1'b0;
-                pc_write_o  = 1'b1;
-            end
+        ST_LOAD_WB: begin
+            o_wb_sel    = WB_MDR;
+            o_reg_write = 1'b1;
+            o_pc_sel    = 1'b0;
+            o_pc_write  = 1'b1;
+        end
 
-            ST_STORE_WRITE: begin
-                mem_addr_sel_o = 1'b1;
-                mem_write_o    = 1'b1;
-                lsu_op_o       = decode_lsu(opcode, funct3);
-                pc_sel_o       = 1'b0;
-                pc_write_o     = 1'b1;
-            end
+        ST_STORE_WRITE: begin
+            o_mem_addr_sel = 1'b1;
+            o_mem_write    = 1'b1;
+            o_lsu_op       = decode_lsu(opcode, funct3);
+            o_pc_sel       = 1'b0;
+            o_pc_write     = 1'b1;
+        end
 
-            ST_BRANCH_TARGET: begin
-                alu_a_sel_o       = 1'b1;    // current PC
-                alu_b_sel_o       = 1'b1;    // bimm
-                alu_control_o     = ALU_ADD;
-                exec_result_sel_o = EXEC_ALU;
-                aluout_write_o    = 1'b1;
-                branch_sel_o      = funct3;
-            end
+        ST_BRANCH_TARGET: begin
+            o_alu_a_sel       = 1'b1;    // current PC
+            o_alu_b_sel       = 1'b1;    // B-immediate
+            o_alu_control     = ALU_ADD;
+            o_exec_result_sel = EXEC_ALU;
+            o_aluout_write    = 1'b1;
+            o_branch_sel      = funct3;
+        end
 
-            ST_BRANCH_COMMIT: begin
-                branch_sel_o = funct3;
-                pc_sel_o     = branch_taken_i;
-                pc_write_o   = 1'b1;         // target/sequential PC+4
-            end
+        ST_BRANCH_COMMIT: begin
+            o_branch_sel = funct3;
+            o_pc_sel     = i_branch_taken;
+            o_pc_write   = 1'b1;         // target or sequential PC+4
+        end
 
-            ST_JAL_TARGET: begin
-                alu_a_sel_o       = 1'b1;    // current PC
-                alu_b_sel_o       = 1'b1;    // jimm
-                alu_control_o     = ALU_ADD;
-                exec_result_sel_o = EXEC_ALU;
-                aluout_write_o    = 1'b1;
-            end
+        ST_JAL_TARGET: begin
+            o_alu_a_sel       = 1'b1;    // current PC
+            o_alu_b_sel       = 1'b1;    // J-immediate
+            o_alu_control     = ALU_ADD;
+            o_exec_result_sel = EXEC_ALU;
+            o_aluout_write    = 1'b1;
+        end
 
-            ST_JAL_COMMIT: begin
-                wb_sel_o    = WB_PC4;
-                reg_write_o = 1'b1;
-                pc_sel_o    = 1'b1;
-                pc_write_o  = 1'b1;
-            end
+        ST_JAL_COMMIT: begin
+            o_wb_sel    = WB_PC4;
+            o_reg_write = 1'b1;
+            o_pc_sel    = 1'b1;
+            o_pc_write  = 1'b1;
+        end
 
-            ST_JALR_TARGET: begin
-                alu_a_sel_o       = 1'b0;    // rs1
-                alu_b_sel_o       = 1'b1;    // iimm
-                alu_control_o     = ALU_ADD;
-                exec_result_sel_o = EXEC_ALU;
-                aluout_write_o    = 1'b1;
-            end
+        ST_JALR_TARGET: begin
+            o_alu_a_sel       = 1'b0;    // rs1
+            o_alu_b_sel       = 1'b1;    // I-immediate
+            o_alu_control     = ALU_ADD;
+            o_exec_result_sel = EXEC_ALU;
+            o_aluout_write    = 1'b1;
+        end
 
-            ST_JALR_COMMIT: begin
-                wb_sel_o       = WB_PC4;
-                reg_write_o    = 1'b1;
-                pc_sel_o       = 1'b1;
-                pc_lsb_clear_o = 1'b1;
-                pc_write_o     = 1'b1;
-            end
+        ST_JALR_COMMIT: begin
+            o_wb_sel       = WB_PC4;
+            o_reg_write    = 1'b1;
+            o_pc_sel       = 1'b1;
+            o_pc_lsb_clear = 1'b1;
+            o_pc_write     = 1'b1;
+        end
 
-            ST_ALU_WB: begin
-                wb_sel_o    = WB_ALUOUT;
-                reg_write_o = 1'b1;
-                pc_sel_o    = 1'b0;
-                pc_write_o  = 1'b1;
-            end
+        ST_ALU_WB: begin
+            o_wb_sel    = WB_ALUOUT;
+            o_reg_write = 1'b1;
+            o_pc_sel    = 1'b0;
+            o_pc_write  = 1'b1;
+        end
 
-            ST_FENCE_COMMIT: begin
-                // no datapath action
-                pc_sel_o   = 1'b0;
-                pc_write_o = 1'b1;
-            end
+        ST_FENCE_COMMIT: begin
+            o_pc_sel   = 1'b0;
+            o_pc_write = 1'b1;
+        end
 
-            ST_HALT: begin
-                halt_o = 1'b1;
-            end
+        ST_HALT: begin
+            o_halt = 1'b1;
+        end
 
-            ST_ILLEGAL: begin
-                illegal_o = 1'b1;
-                halt_o    = 1'b1;
-            end
+        ST_ILLEGAL: begin
+            o_illegal = 1'b1;
+            o_halt    = 1'b1;
+        end
 
-            default: begin
-                illegal_o = 1'b1;
-                halt_o    = 1'b1;
-            end
-        endcase
-    end
-
+        default: begin
+            o_illegal = 1'b1;
+            o_halt    = 1'b1;
+        end
+    endcase
+  end
 endmodule
-
+ 
+ 
+`default_nettype wire
 
 
             
