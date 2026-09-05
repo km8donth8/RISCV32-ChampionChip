@@ -160,9 +160,14 @@ module MemoryUnit (
     end
 
     // -------------------------------------------------------------------------
-    // 1. Read Data MUX (0: IMEM, 1: DMEM)
+    // 1. Fixed Read Data MUX (Mixed Latency: Async IMEM vs. Sync DMEM)
     // -------------------------------------------------------------------------
-    assign mux_mem_data_out = (addr_decoder_sel_q) ? dmem_out : imem_out;
+    // - If current cycle is accessing DMEM (addr_decoder_sel = 1), wait for 
+    //   addr_decoder_sel_q to select dmem_out on the next cycle.
+    // - If accessing IMEM (addr_decoder_sel = 0), route imem_out combinationally.
+    // -------------------------------------------------------------------------
+    assign mux_mem_data_out = (addr_decoder_sel) ? ((addr_decoder_sel_q) ? dmem_out : 32'h00000000) 
+                                                  : imem_out;
 
     // -------------------------------------------------------------------------
     // 2. Load-Store Unit (LSU) Instance
