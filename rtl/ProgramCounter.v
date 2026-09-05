@@ -24,6 +24,7 @@ module ProgramCounter(
     input wire [31:0] i_ALU_output,  // Branch / Jump target address input
     input wire        PC_sel,        // MUX select control signal (0 = PC+4, 1 = Target)
     input wire        clk,
+    input wire        PC_write, 
     input wire        rst_n,
 
     // Outputs (wire because they are driven by 'assign' statements below)
@@ -42,7 +43,7 @@ module ProgramCounter(
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             r_PC_Output <= c_PC_INITIAL_VALUE;
-        end else begin
+        end else if(PC_write) begin
             r_PC_Output <= w_PC_Next;
         end
     end
