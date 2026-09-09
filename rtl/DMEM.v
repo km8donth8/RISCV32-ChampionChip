@@ -99,7 +99,8 @@ module DMEM #(
     end
 
     // Word indexing: Ignore lower 2 offset bits (Range: 0 to 2047)
-    wire [10:0] word_idx = dmem_addr[12:2];
+    localparam ADDR_WIDTH = $clog2(WORDS);
+    wire [ADDR_WIDTH-1:0] word_idx = dmem_addr[(ADDR_WIDTH + 1) : 2];
 
     // Synchronous Write & Read Operations
     always @(posedge clk) begin
