@@ -430,7 +430,7 @@ module AddressDecoder (
 endmodule
 
 module IMEM #(
-    parameter WORDS = 64//1048576
+    parameter WORDS = 4//1048576
 )(
     input  wire        clk,
     input  wire [31:0] imem_addr,   // Address input
@@ -459,7 +459,7 @@ module IMEM #(
 endmodule
 
 module DMEM #(
-    parameter WORDS = 64 // too large 2048 // 8 kB / 4 bytes per word
+    parameter WORDS = 4 // too large 2048 // 8 kB / 4 bytes per word
 )(
     input  wire        clk,
     input  wire [31:0] dmem_addr,    // Relative address from decoder
@@ -1197,7 +1197,7 @@ end
 endmodule
 
 module RegisterFile #(
-    parameter DATA_MEM_SIZE = 2**13
+    parameter DATA_MEM_SIZE = 2**4//2**13
 )(
     input  wire        clk,
     input  wire        rst_n,
@@ -1739,7 +1739,7 @@ module MemoryUnit (
     // 4. Instruction Memory (IMEM) Instance
     // -------------------------------------------------------------------------
     IMEM #(
-        .WORDS(1048576)
+      .WORDS(4)//1048576
     ) u_imem (
         .clk        (clk),
         .imem_addr  (imem_addr),
@@ -1751,7 +1751,7 @@ module MemoryUnit (
     // 5. Data Memory (DMEM) Instance
     // -------------------------------------------------------------------------
     DMEM #(
-        .WORDS(64)
+      .WORDS(4)//2048
     ) u_dmem (
         .clk         (clk),
         .dmem_addr   (dmem_addr),
