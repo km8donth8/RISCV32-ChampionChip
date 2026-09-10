@@ -1,27 +1,6 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 18.08.2026 11:15:22
-// Design Name: 
-// Module Name: tb_Multiplier
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
 
-`timescale 1ns / 1ps
-
-module tb_Multiplier();
+module testbench();
 
     reg [31:0] reg_rs_1;
     reg [31:0] reg_rs_2;
