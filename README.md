@@ -26,7 +26,7 @@ results/    GDSII, gate-level netlist, metrics
 
 ## ALU
 
-<img src="docs/img/ALU_block.png" width="560">
+<img src="pic/ALU.png" width="560">
 
 Eleven operations selected by a 4-bit code formed from `funct7[25]` and
 `funct3[14:12]`. Two input multiplexers let one ALU serve register operations,
