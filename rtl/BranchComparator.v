@@ -1,31 +1,10 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 23.08.2026 15:56:54
-// Design Name: 
-// Module Name: BranchComparator
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-
 module BranchComparator(
     input signed [31:0] reg_rs_1,
     input signed [31:0] reg_rs_2,
     input [2:0] Branch_Sel,         // Matches funct3 [14:12] from the instruction
     output reg o_Branch_Taken
 );
+
 
     /* Branch Funct3 Codes */
     localparam c_BEQ  = 3'b000;
@@ -35,10 +14,12 @@ module BranchComparator(
     localparam c_BLTU = 3'b110;
     localparam c_BGEU = 3'b111;
 
+
     /* Comparison Logic */
     wire w_Branch_Equal              = (reg_rs_1 == reg_rs_2);
     wire w_Branch_Less_Than_Signed   = (reg_rs_1 < reg_rs_2);
     wire w_Branch_Less_Than_Unsigned = ($unsigned(reg_rs_1) < $unsigned(reg_rs_2));
+
 
     always @ (*) begin
         case (Branch_Sel)
@@ -51,5 +32,6 @@ module BranchComparator(
             default: o_Branch_Taken = 1'b0;
         endcase
     end
+
 
 endmodule
