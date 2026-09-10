@@ -300,7 +300,8 @@ Four submodules:
 
 ### Testbench
 
-<img src="pic/tb_MemoryUnit.png" width="700">
+<img src="pic/tb_MemoryUnit1.png" width="700">
+<img src="pic/tb_MemoryUnit2.png" width="700">
 
 44 tests in six categories: every byte lane and both halfword lanes with sign
 and zero extension, sub-word partial overwrite, mixed async/sync latency
