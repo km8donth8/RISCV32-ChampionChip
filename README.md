@@ -6,11 +6,11 @@ ChipInventor and hardened with OpenLane on SkyWater 130 nm.
 **ISA coverage 47/47 (100%)** · **Firmware validation: all stages PASSED**
 
 ```
-rtl/        module sources
-tb/         testbenches
-docs/img/   block diagrams and simulation logs
-synthesis/  OpenLane config and flattened source
-results/    GDSII, gate-level netlist, metrics
+pic/          block diagrams and simulation logs
+rtl/          module sources
+tb/           testbenches
+synthesis/    OpenLane config and flattened source
+firmware.hex  validation firmware
 ```
 
 ### Contents
@@ -42,34 +42,40 @@ immediate operations and PC-relative address computation: `A_sel` picks
 | `4` | OR | | `A` | SLTU (`$unsigned`) |
 | `5` | XOR | | | |
 
-<details><summary><b>rtl/ALU.v</b></summary>
+<details><summary><b>ALU.v</b></summary>
 
 ```verilog
 // paste module here
 ```
+
+[Full source →](rtl/ALU.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/ALU_sim.png" width="700">
+<img src="pic/tb_ALU.png" width="700">
 
 Drives all eleven operations and prints both multiplexer outputs alongside the
 result. Directed operands isolate the sign-sensitive paths: `0x8000000F`
 shifted right by 4 separates SRL (`0x08000000`) from MRS (`0xF8000000`), and
 `-2` against `+10` separates SLT (returns 1) from SLTU (returns 0).
 
-<details><summary><b>tb/tb_ALU.v</b></summary>
+<details><summary><b>tb_ALU.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_ALU.v)
+
 </details>
 
 ---
 
 ## BranchComparator
 
-<img src="docs/img/BranchComparator_block.png" width="560">
+<img src="pic/BranchComparator.png" width="560">
 
 Evaluates the six RV32I branch conditions from `funct3`, driving
 `o_Branch_Taken` for the control unit's branch commit state. Three comparisons
@@ -86,34 +92,40 @@ selection and inversion.
 | `110` | BLTU | unsigned less-than |
 | `111` | BGEU | not unsigned less-than |
 
-<details><summary><b>rtl/BranchComparator.v</b></summary>
+<details><summary><b>BranchComparator.v</b></summary>
 
 ```verilog
 // paste module here
 ```
+
+[Full source →](rtl/BranchComparator.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/BranchComparator_sim.png" width="700">
+<img src="pic/tb_BranchComparator.png" width="700">
 
 Checks each condition true and false. The decisive cases use operand pairs
 where signed and unsigned interpretation disagree — `0x7FFFFFFF` against
 `0x80000000` is signed greater-than but unsigned less-than, so BLT and BLTU
 must return opposite results on identical inputs.
 
-<details><summary><b>tb/tb_BranchComparator.v</b></summary>
+<details><summary><b>tb_BranchComparator.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_BranchComparator.v)
+
 </details>
 
 ---
 
 ## Multiplier
 
-<img src="docs/img/Multiplier_block.png" width="560">
+<img src="pic/Multiplier.png" width="560">
 
 Covers the four Zmmul instructions. Three 64-bit products are computed —
 signed×signed, signed×unsigned and unsigned×unsigned — and `mult_sel`, taken
@@ -128,34 +140,40 @@ variants return the upper 32 bits of the matching product.
 | `2` | MULHSU | `mul_su[63:32]` |
 | `3` | MULHU | `mul_uu[63:32]` |
 
-<details><summary><b>rtl/Multiplier.v</b></summary>
+<details><summary><b>Multiplier.v</b></summary>
 
 ```verilog
 // paste module here
 ```
+
+[Full source →](rtl/Multiplier.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/Multiplier_sim.png" width="700">
+<img src="pic/tb_Multiplier.png" width="700">
 
 Stresses the upper and lower halves of the product with operands whose signed
 and unsigned interpretations differ. `0xFFFFFFFB` against `0x0000000A` gives
 `0xFFFFFFCE` for MUL and `0xFFFFFFFF` for MULH, but `0x00000009` for MULHU —
 the same input bits, three different results.
 
-<details><summary><b>tb/tb_Multiplier.v</b></summary>
+<details><summary><b>tb_Multiplier.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_Multiplier.v)
+
 </details>
 
 ---
 
 ## CRC
 
-<img src="docs/img/CRC_block.png" width="560">
+<img src="pic/CRC.png" width="560">
 
 CRC-16/IBM-3740 over byte, halfword or word payloads: polynomial `0x1021`,
 seed from `reg_rs_2[15:0]`, no input or output reflection, no final XOR. Three
@@ -164,16 +182,19 @@ is zero-extended to 32 bits and can be fed straight back into the seed to chain
 across a longer message. Because `REF_IN = 0` the payload is consumed MSB
 first, so a word payload `0x34333231` is the byte sequence `34 33 32 31`.
 
-<details><summary><b>rtl/CRC.v</b></summary>
+<details><summary><b>CRC.v</b></summary>
 
 ```verilog
 // paste module here (CRC and crc_calc)
 ```
+
+[Full source →](rtl/CRC.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/CRC_sim.png" width="700">
+<img src="pic/tb_CRC.png" width="700">
 
 Checks each width against independently computed CRC-16/IBM-3740 values, plus
 the undefined-selector fallback. `reg_rs_2` carries a non-zero upper half to
@@ -186,18 +207,21 @@ confirm only bits `[15:0]` are used as the seed.
 | `10` | `0x34333231` | `0x0000BBA8` |
 | `11` | — | `0x00000000` |
 
-<details><summary><b>tb/tb_CRC.v</b></summary>
+<details><summary><b>tb_CRC.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_CRC.v)
+
 </details>
 
 ---
 
 ## ImmediateGenerator
 
-<img src="docs/img/ImmediateGenerator_block.png" width="560">
+<img src="pic/ImmediateGenerator.png" width="560">
 
 Extracts and sign-extends the immediate field for every RISC-V format, choosing
 by opcode. B and J formats reassemble scattered instruction bits and append an
@@ -213,34 +237,40 @@ below.
 | `0110111` / `0010111` LUI, AUIPC | U | `[31:12]`, 12 zeros |
 | all others | I | `[31:20]` |
 
-<details><summary><b>rtl/ImmediateGenerator.v</b></summary>
+<details><summary><b>ImmediateGenerator.v</b></summary>
 
 ```verilog
 // paste module here
 ```
+
+[Full source →](rtl/ImmediateGenerator.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/ImmediateGenerator_sim.png" width="700">
+<img src="pic/tb_ImmediateGenerator.png" width="700">
 
 Feeds one instruction per format and compares against the hand-decoded
 immediate. Negative offsets confirm sign extension; B and J cases confirm bit 0
 is always zero and that the scattered fields are reassembled in the right
 order.
 
-<details><summary><b>tb/tb_ImmediateGenerator.v</b></summary>
+<details><summary><b>tb_ImmediateGenerator.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_ImmediateGenerator.v)
+
 </details>
 
 ---
 
 ## MemoryUnit
 
-<img src="docs/img/MemoryUnit_block.png" width="560">
+<img src="pic/MemoryUnit.png" width="560">
 
 Wraps the load-store unit, address decoder, instruction memory and data memory
 behind one interface. IMEM reads asynchronously and DMEM synchronously, so the
@@ -258,16 +288,19 @@ Four submodules:
 - **DMEM** — four byte-wide arrays sharing one word index, so a byte or
   halfword write updates only the selected lanes
 
-<details><summary><b>rtl/MemoryUnit.v</b></summary>
+<details><summary><b>MemoryUnit.v</b></summary>
 
 ```verilog
 // paste module here (MemoryUnit, LSU, AddressDecoder, IMEM, DMEM)
 ```
+
+[Full source →](rtl/MemoryUnit.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/MemoryUnit_sim.png" width="700">
+<img src="pic/tb_MemoryUnit.png" width="700">
 
 44 tests in six categories: every byte lane and both halfword lanes with sign
 and zero extension, sub-word partial overwrite, mixed async/sync latency
@@ -276,34 +309,40 @@ store/load pairs. The partial-overwrite category is the sharpest check — a wor
 is written, then a byte and a halfword overwrite parts of it, and the word is
 re-read to confirm the untouched lanes survived. **44/44 passed.**
 
-<details><summary><b>tb/tb_MemoryUnit.v</b></summary>
+<details><summary><b>tb_MemoryUnit.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_MemoryUnit.v)
+
 </details>
 
 ---
 
 ## ProgramCounter
 
-<img src="docs/img/ProgramCounter_block.png" width="560">
+<img src="pic/ProgramCounter.png" width="560">
 
 Holds the program counter and computes PC+4. `PC_sel` chooses between the
 sequential address and the branch or jump target; `PC_write` gates the update
 so the PC holds steady across the several cycles of one multicycle instruction.
 Reset is asynchronous and loads `0x00400000`, the firmware load address.
 
-<details><summary><b>rtl/ProgramCounter.v</b></summary>
+<details><summary><b>ProgramCounter.v</b></summary>
 
 ```verilog
 // paste module here
 ```
+
+[Full source →](rtl/ProgramCounter.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/ProgramCounter_sim.png" width="700">
+<img src="pic/tb_ProgramCounter.png" width="700">
 
 Six checks: reset value and PC+4, sequential counting across three clocks,
 loading a jump target, resuming sequential execution from the new address,
@@ -311,49 +350,58 @@ holding when `PC_write` is low, and asynchronous reset mid-execution. The hold
 test matters most — the multicycle FSM depends on the PC not advancing during
 execute and memory states.
 
-<details><summary><b>tb/tb_ProgramCounter.v</b></summary>
+<details><summary><b>tb_ProgramCounter.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_ProgramCounter.v)
+
 </details>
 
 ---
 
 ## PC_Target_Align
 
-<img src="docs/img/PC_Target_Align_block.png" width="560">
+<img src="pic/PC_Target_Align.png" width="560">
 
 Clears bit 0 of the computed jump target when `pc_lsb_clear` is asserted, as the
 RISC-V specification requires for JALR. Purely combinational; passes the
 address through unchanged for every other instruction.
 
-<details><summary><b>rtl/PC_Target_Align.v</b></summary>
+<details><summary><b>PC_Target_Align.v</b></summary>
 
 ```verilog
 // paste module here
 ```
+
+[Full source →](rtl/PC_Target_Align.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/PC_Target_Align_sim.png" width="700">
+<img src="pic/tb_PC_Target_Align.png" width="700">
 
 Applies odd and even targets with the control both asserted and de-asserted,
 confirming bit 0 is cleared only for JALR and that no other bit is disturbed.
 
-<details><summary><b>tb/tb_PC_Target_Align.v</b></summary>
+<details><summary><b>tb_PC_Target_Align.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_PC_Target_Align.v)
+
 </details>
 
 ---
 
 ## RegisterFile
 
-<img src="docs/img/RegisterFile_block.png" width="560">
+<img src="pic/RegisterFile.png" width="560">
 
 32 general-purpose 32-bit registers. Reads are asynchronous so both operands are
 available in the decode state; writes are synchronous and gated by `reg_write`.
@@ -362,34 +410,40 @@ zero regardless of what any instruction targets. Reset initialises the global
 pointer `x3` to `0x10010000` (DMEM base) and the stack pointer `x2` to the top
 of the data region, `GP + DATA_MEM_SIZE − 4`.
 
-<details><summary><b>rtl/RegisterFile.v</b></summary>
+<details><summary><b>RegisterFile.v</b></summary>
 
 ```verilog
 // paste module here
 ```
+
+[Full source →](rtl/RegisterFile.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/RegisterFile_sim.png" width="700">
+<img src="pic/tb_RegisterFile.png" width="700">
 
 Verifies the reset values of `x2` and `x3`, write-then-read on general
 registers, simultaneous read of two different registers, and the `x0`
 protection — a write to `x0` is issued and the register is confirmed to still
 read zero.
 
-<details><summary><b>tb/tb_RegisterFile.v</b></summary>
+<details><summary><b>tb_RegisterFile.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_RegisterFile.v)
+
 </details>
 
 ---
 
 ## ControlUnit
 
-<img src="docs/img/ControlUnit_block.png" width="560">
+<img src="pic/ControlUnit.png" width="560">
 
 23-state Moore finite state machine sequencing every instruction through fetch,
 decode, execute, memory and write-back. Decodes opcode, `funct3` and `funct7`
@@ -404,34 +458,40 @@ request, capture, write-back. `ECALL` and `EBREAK` enter `ST_HALT`, which
 asserts `o_halt` and stops the machine, providing the termination signal used by
 the validation testbench.
 
-<details><summary><b>rtl/ControlUnit.v</b></summary>
+<details><summary><b>ControlUnit.v</b></summary>
 
 ```verilog
 // paste module here
 ```
+
+[Full source →](rtl/ControlUnit.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/ControlUnit_sim.png" width="700">
+<img src="pic/tb_ControlUnit.png" width="700">
 
 Feeds one instruction per class and follows the state sequence, checking that
 each state asserts the expected enables and selects. Illegal encodings — a
 reserved `funct7` on a shift-immediate, an unassigned branch `funct3` — are
 applied to confirm the FSM reaches `ST_ILLEGAL` rather than executing something.
 
-<details><summary><b>tb/tb_ControlUnit.v</b></summary>
+<details><summary><b>tb_ControlUnit.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_ControlUnit.v)
+
 </details>
 
 ---
 
 ## Datapath registers
 
-<img src="docs/img/Registers_block.png" width="700">
+<img src="pic/Registers.png" width="700">
 
 Five enable-gated 32-bit registers hold intermediate values between states. All
 share the same structure: asynchronous active-low reset to zero, and a
@@ -445,34 +505,40 @@ synchronous load gated by a control-unit enable.
 | `ALU_OUT_Register` | `o_aluout_write` | execution result or computed address |
 | `MDR_Register` | `o_mdr_write` | word returned by a load |
 
-<details><summary><b>rtl/Registers.v</b></summary>
+<details><summary><b>Registers.v</b></summary>
 
 ```verilog
 // paste modules here
 ```
+
+[Full source →](rtl/Registers.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/Registers_sim.png" width="700">
+<img src="pic/tb_Registers.png" width="700">
 
 For each register: reset clears it, an enabled clock edge loads the input, and a
 clock edge with the enable low leaves it unchanged. The hold case is the one
 that matters — these registers exist so a value survives while later states use
 it.
 
-<details><summary><b>tb/tb_Registers.v</b></summary>
+<details><summary><b>tb_Registers.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_Registers.v)
+
 </details>
 
 ---
 
 ## Multiplexers
 
-<img src="docs/img/Muxes_block.png" width="700">
+<img src="pic/Muxes.png" width="700">
 
 Three combinational multiplexers steer the datapath under control-unit select
 lines.
@@ -485,26 +551,32 @@ lines.
 
 Each has a `default` branch returning zero so no latch is inferred.
 
-<details><summary><b>rtl/Muxes.v</b></summary>
+<details><summary><b>Muxes.v</b></summary>
 
 ```verilog
 // paste modules here
 ```
+
+[Full source →](rtl/Muxes.v)
+
 </details>
 
 ### Testbench
 
-<img src="docs/img/Muxes_sim.png" width="700">
+<img src="pic/tb_Muxes.png" width="700">
 
 Drives distinct values on each input and sweeps the select line through every
 encoding including the undefined one, confirming the correct source is passed
 and that the unused encoding returns zero.
 
-<details><summary><b>tb/tb_Muxes.v</b></summary>
+<details><summary><b>tb_Muxes.v</b></summary>
 
 ```verilog
 // paste testbench here
 ```
+
+[Full source →](tb/tb_Muxes.v)
+
 </details>
 
 ---
@@ -520,7 +592,9 @@ and that the unused encoding returns zero.
 | Total cells | _fill in_ |
 | Magic DRC / KLayout DRC / LVS | 0 / 0 / 0 |
 
-<img src="docs/img/layout.png" width="700">
+<img src="pic/layout.png" width="700">
+
+[OpenLane config →](synthesis/config.json)
 
 ## Firmware validation
 
@@ -532,4 +606,6 @@ stopped at PC=004003ec after 1036 cycles, x4=00000000
 `x4 = 0` at the terminating self-loop confirms every validation stage completed
 without reaching `_error`.
 
-<img src="docs/img/firmware_waveform.png" width="700">
+<img src="pic/firmware_waveform.png" width="700">
+
+[Firmware →](firmware.hex)
