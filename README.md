@@ -2300,34 +2300,76 @@ lines.
 
 Each has a `default` branch returning zero so no latch is inferred.
 
-<details><summary><b>Muxes.v</b></summary>
+<details><summary><b>Memory_Address_MUX.v</b></summary>
 
 ```verilog
-// paste modules here
+module Memory_Address_MUX (
+    input  wire [31:0] pc,
+    input  wire [31:0] alu_out,
+    input  wire        mem_addr_sel,
+    output wire [31:0] mem_addr
+);
+
+assign mem_addr = mem_addr_sel ? alu_out : pc;
+
+endmodule
 ```
-
-[Full source →](rtl/Muxes.v)
-
+[Full source →](rtl/Exec_Result_MUX.v)
 </details>
-
-### Testbench
-
-<img src="pic/tb_Muxes.png" width="700">
-
-Drives distinct values on each input and sweeps the select line through every
-encoding including the undefined one, confirming the correct source is passed
-and that the unused encoding returns zero.
-
-<details><summary><b>tb_Muxes.v</b></summary>
+<details><summary><b>Memory_Address_MUX.v</b></summary>
 
 ```verilog
-// paste testbench here
+`timescale 1ns / 1ps
+module Exec_Result_MUX (
+    input  wire [31:0] alu_result,
+    input  wire [31:0] mult_result,
+    input  wire [31:0] crc_result,
+    input  wire [1:0]  exec_result_sel,
+
+    output reg  [31:0] exec_result
+);
+
+always @(*) begin
+    case (exec_result_sel)
+        2'b00: exec_result = alu_result;
+        2'b01: exec_result = mult_result;
+        2'b10: exec_result = crc_result;
+        default: exec_result = 32'h00000000;
+    endcase
+end
+
+endmodule
 ```
-
-[Full source →](tb/tb_Muxes.v)
-
 </details>
+<details><summary><b>WB_MUX.v</b></summary>
 
+```verilog
+module WB_MUX (
+    input  wire [31:0] alu_out,
+    input  wire [31:0] mdr,
+    input  wire [31:0] mult_result,
+    input  wire [31:0] crc_result,
+    input  wire [31:0] pc_plus4,
+    input  wire [2:0]  wb_sel,
+
+    output reg  [31:0] wb_data
+);
+
+always @(*) begin
+    case (wb_sel)
+        3'd0: wb_data = alu_out;
+        3'd1: wb_data = mdr;
+        3'd2: wb_data = mult_result;
+        3'd3: wb_data = crc_result;
+        3'd4: wb_data = pc_plus4;
+        default: wb_data = 32'h00000000;
+    endcase
+end
+
+endmodule
+```
+[Full source →](rtl/WB_MUX.v)
+</details>
 ---
 
 ## Physical implementation
