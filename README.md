@@ -2230,7 +2230,10 @@ the validation testbench.
 <details><summary><b>ControlUnit.v</b></summary>
 
 ```verilog
-// paste module here
+module ControlUnit(
+
+    );
+endmodule
 ```
 
 [Full source →](rtl/ControlUnit.v)
