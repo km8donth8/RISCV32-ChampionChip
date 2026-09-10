@@ -2257,35 +2257,126 @@ synchronous load gated by a control-unit enable.
 | `ALU_OUT_Register` | `o_aluout_write` | execution result or computed address |
 | `MDR_Register` | `o_mdr_write` | word returned by a load |
 
-<details><summary><b>Registers.v</b></summary>
+<details><summary><b>IR_Registers.v</b></summary>
 
 ```verilog
-// paste modules here
+module IR_Register (
+    input  wire        clk,
+    input  wire        rst_n,
+    input  wire        ir_write,
+    input  wire [31:0] mem_rdata,
+    output reg  [31:0] ir
+);
+
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n)
+        ir <= 32'h00000000;
+    else if (ir_write)
+        ir <= mem_rdata;
+end
+
+endmodule
 ```
 
-[Full source →](rtl/Registers.v)
+[Full source →](rtl/IR_Registers.v)
 
 </details>
-
-### Testbench
-
-<img src="pic/tb_Registers.png" width="700">
-
-For each register: reset clears it, an enabled clock edge loads the input, and a
-clock edge with the enable low leaves it unchanged. The hold case is the one
-that matters — these registers exist so a value survives while later states use
-it.
-
-<details><summary><b>tb_Registers.v</b></summary>
+<details><summary><b>A_Registers.v</b></summary>
 
 ```verilog
-// paste testbench here
+module A_Register (
+    input  wire        clk,
+    input  wire        rst_n,
+    input  wire        ab_write,
+    input  wire [31:0] rs1_data,
+    output reg  [31:0] A
+);
+
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n)
+        A <= 32'h00000000;
+    else if (ab_write)
+        A <= rs1_data;
+end
+
+endmodule
 ```
 
-[Full source →](tb/tb_Registers.v)
+[Full source →](rtl/A_Registers.v)
 
 </details>
+<details><summary><b>B_Registers.v</b></summary>
 
+```verilog
+module B_Register (
+    input  wire        clk,
+    input  wire        rst_n,
+    input  wire        ab_write,
+    input  wire [31:0] rs2_data,
+    output reg  [31:0] B
+);
+
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n)
+        B <= 32'h00000000;
+    else if (ab_write)
+        B <= rs2_data;
+end
+
+endmodule
+```
+
+[Full source →](rtl/B_Registers.v)
+
+</details>
+<details><summary><b>ALU_OUT_Registers.v</b></summary>
+
+```verilog
+module ALU_OUT_Register (
+    input  wire        clk,
+    input  wire        rst_n,
+    input  wire        alu_write,
+    input  wire [31:0] alu_q,
+    output reg  [31:0] alu_out
+);
+
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n)
+        alu_out <= 32'h00000000;
+    else if (alu_write)
+        alu_out <= alu_q;
+end
+
+endmodule
+```
+
+[Full source →](rtl/ALU_OUT_Registers.v)
+
+</details>
+<details><summary><b>MDR_Registers.v</b></summary>
+
+```verilog
+module MDR_Register (
+    input  wire        clk,
+    input  wire        rst_n,
+    input  wire        mdr_write,
+    input  wire [31:0] mem_rdata,
+    output reg  [31:0] mdr
+);
+
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n)
+        mdr <= 32'h00000000;
+    else if (mdr_write)
+        mdr <= mem_rdata;
+end
+
+endmodule
+```
+
+[Full source →](rtl/MDR_Registers.v)
+
+</details>
 ---
 
 ## Multiplexers
