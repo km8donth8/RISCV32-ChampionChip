@@ -2792,7 +2792,7 @@ endmodule
 ## Datapath registers
 
 <img src="pic/IR_Register.png" width="500">
-<img src="pic/AnB_Register.png" width="500">
+<img src="pic/AnB_registers.png" width="500">
 <img src="pic/ALU_OUT_Register.png" width="500">
 <img src="pic/MDR_Register.png" width="500">
 
