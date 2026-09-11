@@ -2932,8 +2932,8 @@ endmodule
 
 ## Multiplexers
 
-<img src="pic/Memory_Address.png" width="500">
-<img src="pic/Exec_Result.png" width="500">
+<img src="pic/Memory_Address_MUX.png" width="500">
+<img src="pic/Exec_Result_MUX.png" width="500">
 <img src="pic/WB_MUX.png" width="500">
 
 Three combinational multiplexers steer the datapath under control-unit select
