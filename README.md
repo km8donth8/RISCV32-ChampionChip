@@ -3030,11 +3030,7 @@ endmodule
 [OpenLane config →](synthesis/config.json)
 
 ## Firmware validation
-
-```
-stopped at PC=004003ec after 1036 cycles, x4=00000000
-==== PASSED ====
-```
+<img src="pic/firmware_log.png" width="700">
 
 `x4 = 0` at the terminating self-loop confirms every validation stage completed
 without reaching `_error`.
