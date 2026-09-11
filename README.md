@@ -2791,7 +2791,10 @@ endmodule
 
 ## Datapath registers
 
-<img src="pic/Registers.png" width="700">
+<img src="pic/IR_Register.png" width="500">
+<img src="pic/AnB_Register.png" width="500">
+<img src="pic/ALU_OUT_Register.png" width="500">
+<img src="pic/MDR_Register.png" width="500">
 
 Five enable-gated 32-bit registers hold intermediate values between states. All
 share the same structure: asynchronous active-low reset to zero, and a
@@ -2929,7 +2932,9 @@ endmodule
 
 ## Multiplexers
 
-<img src="pic/Muxes.png" width="700">
+<img src="pic/Memory_Address.png" width="500">
+<img src="pic/Exec_Result.png" width="500">
+<img src="pic/WB_MUX.png" width="500">
 
 Three combinational multiplexers steer the datapath under control-unit select
 lines.
@@ -2956,9 +2961,9 @@ assign mem_addr = mem_addr_sel ? alu_out : pc;
 
 endmodule
 ```
-[Full source →](rtl/Exec_Result_MUX.v)
+[Full source →](rtl/Memory_Address_MUX.v)
 </details>
-<details><summary><b>Memory_Address_MUX.v</b></summary>
+<details><summary><b>Exec_Result_MUX.v</b></summary>
 
 ```verilog
 `timescale 1ns / 1ps
@@ -2982,6 +2987,7 @@ end
 
 endmodule
 ```
+[Full source →](rtl/Exec_Result_MUX.v)
 </details>
 <details><summary><b>WB_MUX.v</b></summary>
 
