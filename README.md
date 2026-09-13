@@ -10,7 +10,8 @@ pic/          block diagrams and simulation logs
 rtl/          module sources
 tb/           testbenches
 synthesis/    OpenLane config and flattened source
-tb_full_firmware  validation firmware
+firmware.hex  our own test firmware used when testing with individual processor modules or subsystems
+tb_full_firmware.v  official validation firmware from ChampionChip
 ```
 
 ### Contents
