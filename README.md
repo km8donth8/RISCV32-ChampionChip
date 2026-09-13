@@ -10,7 +10,7 @@ pic/          block diagrams and simulation logs
 rtl/          module sources
 tb/           testbenches
 synthesis/    OpenLane config and flattened source
-firmware.hex  validation firmware
+tb_full_firmware  validation firmware
 ```
 
 ### Contents
