@@ -1,4 +1,4 @@
-# RISCV32-ChampionChip — Team 41
+# RISCV32-ChampionChip — Equipe 41
 
 32-bit multicycle RISC-V processor (RV32I + Zmmul + Xicrc), designed in
 ChipInventor and hardened with OpenLane on SkyWater 130 nm.
