@@ -3057,13 +3057,11 @@ implement the full memory system in flip-flops.
 
 <img src="pic/gdc_2d.png" width="700">
 
-*2D layout — full die. Horizontal bands are standard cell rows; the crossing
-stripes are the power distribution network on a 25 µm pitch.*
+*2D layout
 
 <img src="pic/gdc_3d.png" width="700">
 
-*3D view — the sky130 process stack, from diffusion and polysilicon up through
-the metal layers.*
+*3D view
 
 ### Files
 
