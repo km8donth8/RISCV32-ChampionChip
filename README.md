@@ -3071,8 +3071,8 @@ implement the full memory system in flip-flops.
 | GDSII | [synthesis/gds/top.zip](synthesis/gds/top.zip) |
 | Gate-level netlist | [synthesis/netlist/top.v](synthesis/netlist/top.v) |
 | Netlist (no power pins) | [synthesis/netlist/top.nl.v](synthesis/netlist/top.nl.v) |
-| RTL source | [synthesis/src/hdl.v](synthesis/src/hdl.v) |
-| Synthesised RTL | [synthesis/src/hdl_synthesis.v](synthesis/src/hdl_synthesis.v) |
+| RTL source with chipinventor schematic | [synthesis/verilog/hdl.v](synthesis/verilog/hdl.v) |
+| RTL packaged into single block | [synthesis/verilog/hdl_synthesis.v](synthesis/verilog/hdl_synthesis.v) |
 | OpenLane config | [synthesis/config.json](synthesis/config.json) |
 | Flow log | [synthesis/global.log](synthesis/global.log) |
 
