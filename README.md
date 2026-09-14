@@ -3106,6 +3106,12 @@ final result.*
 *ori
 <img src="pic/betterview_waveform.png" width="700">
 *better view
+| Hex | State |
+|---|---|
+| 4645544348 | FETCH |
+| 4445434f4445 | DECODE |
+| 4a414c5f544152474554 | JAL_TARGET |
+| 4a414c5f434f4d4d4954 | JAL_COMMIT |
 
 *Waveform at termination — PC parked at `0x004003EC` executing `jal x0, 0`,
 `x4 = 0`, and `seen = 0x3FF` confirming all ten firmware stages were entered.*
