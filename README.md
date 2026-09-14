@@ -3129,4 +3129,5 @@ Both builds share identical processor logic and differ only in the contents and
 depth of the memories.
 
 *Testbench for mock (12B)
+
 <img src="pic/tb_synthesizefirmware.png" width="700">
