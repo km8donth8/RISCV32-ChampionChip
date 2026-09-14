@@ -1,5 +1,21 @@
 
 
+//  ---------- INLCUDED BLOCK: PFirmware  ---------- 
+//  ---------- INLCUDED BLOCK: PFirmware  ----------
+//
+// Complete RV32I + Zmmul + Xicrc multicycle processor, self-contained.
+//
+//   Ports:  clk, rst_n (active low), o_halt
+//   IMEM :  3-instruction mock program
+//   DMEM :  3 words = 12 B, 0x10010000 - 0x1001000B
+//   SP   :  0x10010008
+//
+// Identical to the ChipInventor top-level design; only the module name
+// differs so this can be instantiated as a block.
+//
+
+
+
 //  ---------- INLCUDED BLOCK: ALU_equipe41  ---------- 
 //NOTE: ALU control signals
 //funct7 [31:25] - lsb used
@@ -18,6 +34,229 @@
 `define c_ALU_OP_MRS    4'h8
 `define c_ALU_OP_SLT    4'h9
 `define c_ALU_OP_SLTU    4'hA
+
+module PFirmware (
+
+  input wire clk,
+  input wire rst_n,
+  output wire o_halt
+
+);
+
+//Internal Wires
+ wire w_1;
+ wire [31:0] w_2;
+ wire [31:0] w_3;
+ wire w_4;
+ wire [31:0] w_5;
+ wire [31:0] w_6;
+ wire [31:0] w_7;
+ wire [31:0] w_8;
+ wire [31:0] w_9;
+ wire [1:0] w_10;
+ wire [31:0] w_11;
+ wire [31:0] w_12;
+ wire [1:0] w_13;
+ wire [31:0] w_14;
+ wire [31:0] w_15;
+ wire w_17;
+ wire [31:0] w_18;
+ wire [31:0] w_19;
+ wire [31:0] w_20;
+ wire [3:0] w_21;
+ wire w_22;
+ wire [31:0] w_23;
+ wire [31:0] w_24;
+ wire [31:0] w_25;
+ wire [2:0] w_28;
+ wire w_29;
+ wire [1:0] w_32;
+ wire w_33;
+ wire [31:0] w_34;
+ wire [31:0] w_37;
+ wire w_39;
+ wire w_40;
+ wire w_41;
+ wire w_43;
+ wire w_44;
+ wire w_45;
+ wire [3:0] w_46;
+ wire w_47;
+ wire w_48;
+ wire [2:0] w_49;
+
+//Instances of Modules
+ALU_OUT_Register blk4367_2 (
+         .clk (clk),
+         .rst_n (rst_n),
+         .alu_write (w_1),
+         .alu_q (w_2),
+         .alu_out (w_3)
+     );
+
+MDR_Register blk4370_5 (
+         .clk (clk),
+         .rst_n (rst_n),
+         .mdr_write (w_4),
+         .mem_rdata (w_5),
+         .mdr (w_6)
+     );
+
+Exec_Result_MUX blk4371_6 (
+         .exec_result (w_2),
+         .alu_result (w_7),
+         .mult_result (w_8),
+         .crc_result (w_9),
+         .exec_result_sel (w_10)
+     );
+
+WB_MUX blk4372_7 (
+         .mdr (w_6),
+         .alu_out (w_11),
+         .pc_plus4 (w_12),
+         .wb_sel (w_13),
+         .wb_data (w_14)
+     );
+
+Memory_Address_MUX blk4373_8 (
+         .pc (w_15),
+         .alu_out (w_11),
+         .mem_addr_sel (w_17),
+         .mem_addr (w_18)
+     );
+
+Multiplier_equipe41 blk4299_9 (
+         .rd (w_8),
+         .reg_rs_1 (w_19),
+         .reg_rs_2 (w_20),
+         .mult_sel (w_21)
+     );
+
+RegisterFile_equipe41 #(.DATA_MEM_SIZE(12)) blk4352_11 (
+         .clk (clk),
+         .rst_n (rst_n),
+         .reg_rd_data (w_14),
+         .reg_write (w_22),
+         .instruction (w_23),
+         .reg_rs_1_data (w_24),
+         .reg_rs_2_data (w_25)
+     );
+
+BranchComparator_equipe41 blk4296_12 (
+         .reg_rs_1 (w_19),
+         .reg_rs_2 (w_20),
+         .Branch_Sel (w_28),
+         .o_Branch_Taken (w_29)
+     );
+
+CRC_equipe41 blk4295_13 (
+         .rd (w_9),
+         .reg_rs_1 (w_19),
+         .reg_rs_2 (w_20),
+         .crc_sel (w_32)
+     );
+
+PC_Target_Align_equipe41 blk4353_18 (
+         .alu_out (w_3),
+         .pc_target (w_11),
+         .pc_lsb_clear (w_33)
+     );
+
+ImmediateGenerator_equipe41 blk4297_19 (
+         .instruction (w_23),
+         .extended_immediate (w_37)
+     );
+
+ControlUnit_equipe41 blk4354_26 (
+         .clk (clk),
+         .rst_n (rst_n),
+         .o_halt (o_halt),
+         .o_aluout_write (w_1),
+         .o_mdr_write (w_4),
+         .o_exec_result_sel (w_10),
+         .o_wb_sel (w_13),
+         .o_mem_addr_sel (w_17),
+         .o_mult_sel (w_21),
+         .o_reg_write (w_22),
+         .o_branch_sel (w_28),
+         .i_branch_taken (w_29),
+         .o_crc_sel (w_32),
+         .o_pc_lsb_clear (w_33),
+         .i_instruction (w_23),
+         .o_pc_write (w_39),
+         .o_ir_write (w_40),
+         .o_operand_write (w_41),
+         .o_pc_sel (w_43),
+         .o_alu_a_sel (w_44),
+         .o_alu_b_sel (w_45),
+         .o_alu_control (w_46),
+         .o_mem_read (w_47),
+         .o_mem_write (w_48),
+         .o_lsu_op (w_49)
+     );
+
+IR_Register blk4368_28 (
+         .clk (clk),
+         .rst_n (rst_n),
+         .ir (w_23),
+         .ir_write (w_40),
+         .mem_rdata (w_5)
+     );
+
+ALU_equipe41 blk4294_30 (
+         .Q (w_7),
+         .immediate (w_37),
+         .A_sel (w_44),
+         .B_sel (w_45),
+         .ALU_control (w_46),
+         .reg_rs_1 (w_19),
+         .reg_rs_2 (w_20),
+         .pc_output (w_15)
+     );
+
+ProgramCounter_equipe41 blk4300_34 (
+         .clk (clk),
+         .rst_n (rst_n),
+         .o_PC_Plus_4 (w_12),
+         .o_PC_Output (w_15),
+         .i_ALU_output (w_11),
+         .PC_write (w_39),
+         .PC_sel (w_43)
+     );
+
+A_Register blk4369_35 (
+         .clk (clk),
+         .rst_n (rst_n),
+         .A (w_19),
+         .rs1_data (w_24),
+         .ab_write (w_41)
+     );
+
+B_Register blk4366_36 (
+         .clk (clk),
+         .rst_n (rst_n),
+         .B (w_20),
+         .rs2_data (w_25),
+         .ab_write (w_41)
+     );
+
+MemoryUnit_equipe41 blk4298_38 (
+         .clk (clk),
+         .core_data_i (w_5),
+         .core_address_o (w_18),
+         .read_enable (w_47),
+         .write_enable (w_48),
+         .op_size_o (w_49),
+         .core_data_o (w_20)
+     );
+
+
+endmodule
+
+
+//////////////////////////////////////////////////////////////////////
+// Submodules
+//////////////////////////////////////////////////////////////////////
 
 module ALU_equipe41(
     input wire [31:0] reg_rs_1,
@@ -416,7 +655,7 @@ module MemoryUnit_equipe41(
     // 5. Data Memory (DMEM) Instance
     // -------------------------------------------------------------------------
     DMEM #(
-      .WORDS(4)
+      .WORDS(3)
     ) u_dmem (
         .clk         (clk),
         .dmem_addr   (dmem_addr),
@@ -559,7 +798,7 @@ module AddressDecoder (
     localparam IMEM_HIGH = 32'h007FFFFF; // 4 MB Range
 
     localparam DMEM_BASE = 32'h10010000;
-    localparam DMEM_HIGH = 32'h10011FFF; // 8 kB Range (0x2000 bytes)
+    localparam DMEM_HIGH = 32'h1001000B; // 8 kB Range (0x2000 bytes)
 
     always @(*) begin
         // Default Outputs
@@ -618,7 +857,7 @@ module IMEM #(
 endmodule
 
 module DMEM #(
-    parameter WORDS = 4// 8 kB / 4 bytes per word
+    parameter WORDS = 3//3words
 )(
     input  wire        clk,
     input  wire [31:0] dmem_addr,    // Relative address from decoder
@@ -1543,213 +1782,11 @@ module top (
   output wire o_halt
 
 );
-
-//Internal Wires
- wire w_1;
- wire [31:0] w_2;
- wire [31:0] w_3;
- wire w_4;
- wire [31:0] w_5;
- wire [31:0] w_6;
- wire [31:0] w_7;
- wire [31:0] w_8;
- wire [31:0] w_9;
- wire [1:0] w_10;
- wire [31:0] w_11;
- wire [31:0] w_12;
- wire [1:0] w_13;
- wire [31:0] w_14;
- wire [31:0] w_15;
- wire w_17;
- wire [31:0] w_18;
- wire [31:0] w_19;
- wire [3:0] w_20;
- wire w_22;
- wire w_23;
- wire [31:0] w_24;
- wire w_25;
- wire [31:0] w_26;
- wire [31:0] w_27;
- wire [31:0] w_28;
- wire [2:0] w_31;
- wire w_32;
- wire [1:0] w_35;
- wire [31:0] w_39;
- wire [3:0] w_40;
- wire w_41;
- wire w_42;
- wire w_43;
- wire [31:0] w_44;
- wire [31:0] w_48;
- wire w_52;
- wire [31:0] w_54;
- wire w_56;
- wire [31:0] w_57;
- wire w_60;
- wire [2:0] w_62;
- wire [31:0] w_64;
-
 //Instances of Modules
-ALU_OUT_Register blk4367_2 (
+PFirmware blk4480_4 (
          .clk (clk),
          .rst_n (rst_n),
-         .alu_write (w_1),
-         .alu_q (w_2),
-         .alu_out (w_3)
-     );
-
-MDR_Register blk4370_5 (
-         .clk (clk),
-         .rst_n (rst_n),
-         .mdr_write (w_4),
-         .mem_rdata (w_5),
-         .mdr (w_6)
-     );
-
-Exec_Result_MUX blk4371_6 (
-         .exec_result (w_2),
-         .alu_result (w_7),
-         .mult_result (w_8),
-         .crc_result (w_9),
-         .exec_result_sel (w_10)
-     );
-
-WB_MUX blk4372_7 (
-         .mdr (w_6),
-         .alu_out (w_11),
-         .pc_plus4 (w_12),
-         .wb_sel (w_13),
-         .wb_data (w_14)
-     );
-
-Memory_Address_MUX blk4373_8 (
-         .pc (w_15),
-         .alu_out (w_11),
-         .mem_addr_sel (w_17)
-     );
-
-Multiplier_equipe41 blk4299_9 (
-         .rd (w_8),
-         .reg_rs_1 (w_18),
-         .reg_rs_2 (w_19),
-         .mult_sel (w_20)
-     );
-
-ProgramCounter_equipe41 blk4300_10 (
-         .clk (clk),
-         .rst_n (rst_n),
-         .o_PC_Plus_4 (w_12),
-         .o_PC_Output (w_15),
-         .i_ALU_output (w_11),
-         .PC_sel (w_22),
-         .PC_write (w_23)
-     );
-
-RegisterFile_equipe41 #(.DATA_MEM_SIZE(2**13)) blk4352_11 (
-         .clk (clk),
-         .rst_n (rst_n),
-         .reg_rd_data (w_14),
-         .reg_write (w_25),
-         .instruction (w_26),
-         .reg_rs_1_data (w_27),
-         .reg_rs_2_data (w_28)
-     );
-
-BranchComparator_equipe41 blk4296_12 (
-         .reg_rs_1 (w_18),
-         .reg_rs_2 (w_19),
-         .Branch_Sel (w_31),
-         .o_Branch_Taken (w_32)
-     );
-
-CRC_equipe41 blk4295_13 (
-         .rd (w_9),
-         .reg_rs_1 (w_18),
-         .reg_rs_2 (w_19),
-         .crc_sel (w_35)
-     );
-
-ALU_equipe41 blk4294_14 (
-         .Q (w_7),
-         .pc_output (w_24),
-         .reg_rs_1 (w_18),
-         .reg_rs_2 (w_19),
-         .pc_output (w_15),
-         .immediate (w_39),
-         .ALU_control (w_40),
-         .A_sel (w_41)
-     );
-
-A_Register blk4369_15 (
-         .clk (clk),
-         .rst_n (rst_n),
-         .A (w_18),
-         .rs1_data (w_27),
-         .ab_write (w_43)
-     );
-
-B_Register blk4366_16 (
-         .clk (clk),
-         .rst_n (rst_n),
-         .B (w_19),
-         .rs2_data (w_28),
-         .ab_write (w_43)
-     );
-
-IR_Register blk4368_17 (
-         .clk (clk),
-         .rst_n (rst_n),
-         .ir (w_26),
-         .ir_write (w_52),
-         .mem_rdata (w_5)
-     );
-
-PC_Target_Align_equipe41 blk4353_18 (
-         .alu_out (w_3),
-         .pc_target (w_11),
-         .pc_lsb_clear (w_56)
-     );
-
-ImmediateGenerator_equipe41 blk4297_19 (
-         .extended_immediate (w_39),
-         .instruction (w_54)
-     );
-
-MemoryUnit_equipe41 blk4298_24 (
-         .clk (clk),
-         .core_data_i (w_5),
-         .core_data_o (w_48),
-         .write_enable (w_60),
-         .read_enable (w_60),
-         .op_size_o (w_62),
-         .core_data_o (w_19)
-     );
-
-ControlUnit_equipe41 blk4354_26 (
-         .clk (clk),
-         .rst_n (rst_n),
-         .o_halt (o_halt),
-         .o_aluout_write (w_1),
-         .o_mdr_write (w_4),
-         .o_exec_result_sel (w_10),
-         .o_wb_sel (w_13),
-         .o_mem_addr_sel (w_17),
-         .o_mult_sel (w_20),
-         .o_pc_sel (w_22),
-         .o_pc_write (w_23),
-         .o_reg_write (w_25),
-         .o_branch_sel (w_31),
-         .i_branch_taken (w_32),
-         .o_crc_sel (w_35),
-         .o_alu_control (w_40),
-         .o_alu_a_sel (w_41),
-         .o_alu_b_sel (w_42),
-         .o_operand_write (w_43),
-         .o_ir_write (w_52),
-         .i_instruction (w_54),
-         .o_pc_lsb_clear (w_56),
-         .o_mem_read (w_60),
-         .o_lsu_op (w_62)
+         .o_halt (o_halt)
      );
 
 
