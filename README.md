@@ -3030,18 +3030,29 @@ Hardened with OpenLane v1.1.1 (commit `3876562d`) on the SkyWater sky130A PDK.
 The run was executed on both the ChipInventor cloud service and locally under
 Docker from the same source and configuration, producing identical results.
 
-| Metric | Value |
-|---|---|
-| Technology | SkyWater 130 nm, `sky130_fd_sc_hd` |
-| Clock period | 20 ns (achievable 23.6 ns ≈ 42 MHz) |
-| Die area | 0.6535 mm² (808.36 × 808.36 µm) |
-| Core area | 626,614.72 µm² |
+### Physical Implementation Results
+
+| Metric | Result |
+|---|---:|
+| OpenLane flow | Completed successfully |
+| Die area | 0.6535 mm² |
 | Final utilisation | 35.97% |
-| Total cells placed | 79,073 |
-| Standard cells synthesised | 21,392 |
-| Wire length | 1,346,134 µm |
-| Magic DRC / KLayout DRC / LVS | 0 / 0 / 0 |
-| Antenna violations | 162 pin / 126 net |
+| Synthesised cells | 21,392 |
+| Target clock period | 20 ns |
+| Target frequency | 50 MHz |
+| Suggested clock period | 23.6 ns |
+| Estimated operating frequency | ~42.4 MHz |
+| Aggregate WNS | -4.24 ns |
+| SPEF WNS | -3.60 ns |
+| Typical-corner setup violations | 0 |
+| Typical-corner hold violations | 0 |
+| Magic DRC violations | 0 |
+| KLayout DRC violations | 0 |
+| LVS errors | 0 |
+| Pin antenna violations | 162 |
+| Net antenna violations | 126 |
+
+The OpenLane RTL-to-GDSII flow completed successfully. DRC and LVS checks are clean, while timing and antenna results indicate areas for further optimisation. Although the Typical-corner signoff reports no setup or hold violations, the overall timing metrics suggest a conservative operating period of approximately 23.6 ns (~42.4 MHz), compared with the original 20 ns (50 MHz) target.
 
 Setup timing does not close at 20 ns — worst-corner slack is −4.44 ns and the
 tool reports a required period of 23.6 ns. Hold is met at all three parasitic
