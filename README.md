@@ -3107,6 +3107,7 @@ final result.*
 <img src="pic/betterview_waveform.png" width="700">
 *better view
 
+
 | Hex | State |
 |---|---|
 | 4645544348 | FETCH |
