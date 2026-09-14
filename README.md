@@ -3052,19 +3052,6 @@ Docker from the same source and configuration, producing identical results.
 | Pin antenna violations | 162 |
 | Net antenna violations | 126 |
 
-The OpenLane RTL-to-GDSII flow completed successfully. DRC and LVS checks are clean, while timing and antenna results indicate areas for further optimisation. Although the Typical-corner signoff reports no setup or hold violations, the overall timing metrics suggest a conservative operating period of approximately 23.6 ns (~42.4 MHz), compared with the original 20 ns (50 MHz) target.
-
-Setup timing does not close at 20 ns — worst-corner slack is −4.44 ns and the
-tool reports a required period of 23.6 ns. Hold is met at all three parasitic
-corners. The limiting path is 44 levels of combinational arithmetic, consistent
-with the multiplier array; reducing it from three parallel 32×32 products to a
-single 33×33 signed multiply is the optimisation identified for future work.
-
-For the physical run the instruction memory holds the 3-instruction mock program
-and the data memory is reduced to 3 words, following the organisers' guidance —
-the objective of this step is to validate the RTL-to-GDSII flow, not to
-implement the full memory system in flip-flops.
-
 ### Layout
 
 <img src="pic/gdc_2d.png" width="700">
