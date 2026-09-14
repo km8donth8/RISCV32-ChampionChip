@@ -3018,71 +3018,102 @@ end
 endmodule
 ```
 [Full source →](rtl/WB_MUX.v)
+
 </details>
+
 ---
 
-Physical implementation
+## Physical implementation
 
-Hardened with OpenLane v1.1.1 (commit 3876562d) on the SkyWater sky130A PDK. The run was executed on both the ChipInventor cloud service and locally under Docker from the same source and configuration, producing identical results.
+Hardened with OpenLane v1.1.1 (commit `3876562d`) on the SkyWater sky130A PDK.
+The run was executed on both the ChipInventor cloud service and locally under
+Docker from the same source and configuration, producing identical results.
 
-Metric	Value
-Technology	SkyWater 130 nm, sky130_fd_sc_hd
-Clock period	20 ns (achievable 23.6 ns ≈ 42 MHz)
-Die area	0.6535 mm² (808.36 × 808.36 µm)
-Core area	626,614.72 µm²
-Final utilisation	35.97%
-Total cells placed	79,073
-Standard cells synthesised	21,392
-Wire length	1,346,134 µm
-Magic DRC / KLayout DRC / LVS	0 / 0 / 0
-Antenna violations	162 pin / 126 net
+| Metric | Value |
+|---|---|
+| Technology | SkyWater 130 nm, `sky130_fd_sc_hd` |
+| Clock period | 20 ns (achievable 23.6 ns ≈ 42 MHz) |
+| Die area | 0.6535 mm² (808.36 × 808.36 µm) |
+| Core area | 626,614.72 µm² |
+| Final utilisation | 35.97% |
+| Total cells placed | 79,073 |
+| Standard cells synthesised | 21,392 |
+| Wire length | 1,346,134 µm |
+| Magic DRC / KLayout DRC / LVS | 0 / 0 / 0 |
+| Antenna violations | 162 pin / 126 net |
 
-Setup timing does not close at 20 ns — worst-corner slack is −4.44 ns and the tool reports a required period of 23.6 ns. Hold is met at all three parasitic corners. The limiting path is 44 levels of combinational arithmetic, consistent with the multiplier array; reducing it from three parallel 32×32 products to a single 33×33 signed multiply is the optimisation identified for future work.
+Setup timing does not close at 20 ns — worst-corner slack is −4.44 ns and the
+tool reports a required period of 23.6 ns. Hold is met at all three parasitic
+corners. The limiting path is 44 levels of combinational arithmetic, consistent
+with the multiplier array; reducing it from three parallel 32×32 products to a
+single 33×33 signed multiply is the optimisation identified for future work.
 
-For the physical run the instruction memory holds the 3-instruction mock program and the data memory is reduced to 3 words, following the organisers' guidance — the objective of this step is to validate the RTL-to-GDSII flow, not to implement the full memory system in flip-flops.
+For the physical run the instruction memory holds the 3-instruction mock program
+and the data memory is reduced to 3 words, following the organisers' guidance —
+the objective of this step is to validate the RTL-to-GDSII flow, not to
+implement the full memory system in flip-flops.
 
-Layout
+### Layout
+
 <img src="pic/gdc_2d.png" width="700">
 
-2D layout — full die. Horizontal bands are standard cell rows; the crossing stripes are the power distribution network on a 25 µm pitch.
+*2D layout — full die. Horizontal bands are standard cell rows; the crossing
+stripes are the power distribution network on a 25 µm pitch.*
 
 <img src="pic/gdc_3d.png" width="700">
 
-3D view — the sky130 process stack, from diffusion and polysilicon up through the metal layers.
+*3D view — the sky130 process stack, from diffusion and polysilicon up through
+the metal layers.*
 
-Files
-File	Path
-GDSII	synthesis/gds/top.zip
-Gate-level netlist	synthesis/netlist/top.v
-Netlist (no power pins)	synthesis/netlist/top.nl.v
-RTL source	synthesis/src/hdl.v
-Synthesised RTL	synthesis/src/hdl_synthesis.v
-OpenLane config	synthesis/config.json
-Flow log	synthesis/global.log
-Firmware validation
+### Files
 
-The official ChampionCHIP Stage 2 validation firmware was run to completion in simulation. It exercises every implemented instruction class in sequence and branches to _error on the first failed check, so reaching the end is only possible if every stage passes.
+| File | Path |
+|---|---|
+| GDSII | [synthesis/gds/top.zip](synthesis/gds/top.zip) |
+| Gate-level netlist | [synthesis/netlist/top.v](synthesis/netlist/top.v) |
+| Netlist (no power pins) | [synthesis/netlist/top.nl.v](synthesis/netlist/top.nl.v) |
+| RTL source | [synthesis/src/hdl.v](synthesis/src/hdl.v) |
+| Synthesised RTL | [synthesis/src/hdl_synthesis.v](synthesis/src/hdl_synthesis.v) |
+| OpenLane config | [synthesis/config.json](synthesis/config.json) |
+| Flow log | [synthesis/global.log](synthesis/global.log) |
 
+---
+
+## Firmware validation
+
+The official ChampionCHIP Stage 2 validation firmware was run to completion in
+simulation. It exercises every implemented instruction class in sequence and
+branches to `_error` on the first failed check, so reaching the end is only
+possible if every stage passes.
+
+```
 Final PC          : 0x004003ec
 Cycles executed   : 1036
 x4 (result)       : 0x00000000
 x2 (sp)           : 0x10011ffc
 x3 (gp)           : 0x10010000
 STATUS: [ALL VALIDATION STAGES PASSED]
+```
 
-x4 = 0 at the terminating self-loop confirms every validation stage completed without reaching _error.
+`x4 = 0` at the terminating self-loop confirms every validation stage completed
+without reaching `_error`.
 
 <img src="pic/fullfirmware_result.png" width="700">
 
-Simulation log — progress trace showing each validation stage entered, with the final result.
+*Simulation log — progress trace showing each validation stage entered, with the
+final result.*
 
 <img src="pic/fullfirmware_waveform.png" width="700">
 
-Waveform at termination — PC parked at 0x004003EC executing jal x0, 0, x4 = 0, and seen = 0x3FF confirming all ten firmware stages were entered.
+*Waveform at termination — PC parked at `0x004003EC` executing `jal x0, 0`,
+`x4 = 0`, and `seen = 0x3FF` confirming all ten firmware stages were entered.*
 
-Testbenches
-Build	Memory configuration	Testbench
-Validation	259-instruction firmware, 8 kB DMEM	tb/tb_fullfirmware.v
-Physical	3-instruction mock, 12 B DMEM	tb/tb_synthesizefirmware.v
+### Testbenches
 
-Both builds share identical processor logic and differ only in the contents and depth of the memories.
+| Build | Memory configuration | Testbench |
+|---|---|---|
+| Validation | 259-instruction firmware, 8 kB DMEM | [tb/tb_fullfirmware.v](tb/tb_fullfirmware.v) |
+| Physical | 3-instruction mock, 12 B DMEM | [tb/tb_synthesizefirmware.v](tb/tb_synthesizefirmware.v) |
+
+Both builds share identical processor logic and differ only in the contents and
+depth of the memories.
