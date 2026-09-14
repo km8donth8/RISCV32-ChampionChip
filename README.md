@@ -1786,7 +1786,7 @@ endmodule
 
 ```
 
-[Full source →](tb/tb_MemoryUnit.v)
+[Full source →](tb/tb_MemoryUnit_rigorous_mixed_latency.v)
 
 </details>
 
