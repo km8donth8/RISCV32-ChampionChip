@@ -3103,6 +3103,9 @@ without reaching `_error`.
 final result.*
 
 <img src="pic/fullfirmware_waveform.png" width="700">
+*ori
+<img src="pic/betterview_waveform.png" width="700">
+*better view
 
 *Waveform at termination — PC parked at `0x004003EC` executing `jal x0, 0`,
 `x4 = 0`, and `seen = 0x3FF` confirming all ten firmware stages were entered.*
