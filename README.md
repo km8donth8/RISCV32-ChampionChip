@@ -463,8 +463,8 @@ endmodule
 
 <img src="pic/Multiplier.png" width="560">
 
-Covers the four Zmmul instructions. Three 64-bit products are computed —
-signed×signed, signed×unsigned and unsigned×unsigned — and `mult_sel`, taken
+Covers the four Zmmul instructions. Three 64-bit products are computed:
+signed×signed, signed×unsigned and unsigned×unsigned and `mult_sel`, taken
 from `funct3`, selects which half of which product reaches `rd`. MUL returns
 the low 32 bits, which are identical regardless of signedness; the three MULH
 variants return the upper 32 bits of the matching product.
