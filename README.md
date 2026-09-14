@@ -3052,6 +3052,9 @@ Docker from the same source and configuration, producing identical results.
 | Pin antenna violations | 162 |
 | Net antenna violations | 126 |
 
+OpenLane completed successfully with a target clock period of 20 ns (50 MHz). Although the final Typical-corner analysis reports no setup or hold violations, other timing metrics show negative WNS, including −4.24 ns aggregate WNS and −3.60 ns SPEF WNS. OpenLane therefore suggests a safer clock period of approximately 23.6 ns, corresponding to about 42.4 MHz. The timing limitation is likely caused by long combinational datapath paths, particularly the multiplier and associated multiplexing logic. Future optimisation could reduce multiplier complexity, restructure combinational paths, or use a multicycle implementation.
+
+
 ### Layout
 
 <img src="pic/gdc_2d.png" width="700">
