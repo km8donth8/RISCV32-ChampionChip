@@ -1,0 +1,15 @@
+VCD info: dumpfile results/tb_official_fw.vcd opened for output.
+=====================================================================
+ ChampionCHIP Stage 3 - Official GPIO & UART Test Firmware (Team 41)
+ SoC clock 50 MHz, UART 115200 baud 8-N-1
+=====================================================================
+[PASS] GPIO: P3-P0 = 0xa, P7-P4 = 0xa  (DATAOUT = 0xa0)  @    0.82 us
+[INFO] DATADIR = 0xf0 -> P7-P4 outputs, P3-P0 inputs
+[PASS] UART: RX = 0x30, TX = 0x30  @  167.01 us
+[PASS] UART: RX = 0x4b, TX = 0x4b  @  333.13 us
+[PASS] GPIO: P3-P0 = 0x5, P7-P4 = 0x5  (DATAOUT = 0x50)  @  333.13 us
+---------------------------------------------------------------------
+[PASS] GPIO and UART firmware test completed successfully
+Simulated time:  333.13 us, PC = 0x00400020, halt = 0
+=====================================================================
+tb/tb_official_fw.v:160: $finish called at 343135282 (1ps)

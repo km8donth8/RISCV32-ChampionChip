@@ -1,0 +1,179 @@
+
+app/build/firmware.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00400000 <_start>:
+  400000:	f0000437          	lui	s0,0xf0000
+  400004:	f10004b7          	lui	s1,0xf1000
+  400008:	0f000293          	li	t0,240
+  40000c:	00542423          	sw	t0,8(s0) # f0000008 <GPIO_BASE+0x8>
+  400010:	0004a423          	sw	zero,8(s1) # f1000008 <UART_BASE+0x8>
+
+00400014 <_idle>:
+  400014:	08000293          	li	t0,128
+  400018:	00542023          	sw	t0,0(s0)
+
+0040001c <_wait_vehicle>:
+  40001c:	00442283          	lw	t0,4(s0)
+  400020:	0082f293          	andi	t0,t0,8
+  400024:	fe028ce3          	beqz	t0,40001c <_wait_vehicle>
+  400028:	00442903          	lw	s2,4(s0)
+  40002c:	00042023          	sw	zero,0(s0)
+  400030:	000109b7          	lui	s3,0x10
+  400034:	fff98993          	addi	s3,s3,-1 # ffff <CRC_SEED>
+  400038:	00000a13          	li	s4,0
+  40003c:	00000b13          	li	s6,0
+  400040:	02000b93          	li	s7,32
+
+00400044 <_rx_balance>:
+  400044:	124000ef          	jal	400168 <_uart_getc>
+  400048:	813509b3          	.insn	4, 0x813509b3
+  40004c:	01651533          	sll	a0,a0,s6
+  400050:	00aa6a33          	or	s4,s4,a0
+  400054:	008b0b13          	addi	s6,s6,8
+  400058:	ff7b16e3          	bne	s6,s7,400044 <_rx_balance>
+  40005c:	10c000ef          	jal	400168 <_uart_getc>
+  400060:	813509b3          	.insn	4, 0x813509b3
+  400064:	00050a93          	mv	s5,a0
+  400068:	100000ef          	jal	400168 <_uart_getc>
+  40006c:	813509b3          	.insn	4, 0x813509b3
+  400070:	00851513          	slli	a0,a0,0x8
+  400074:	00aaeab3          	or	s5,s5,a0
+  400078:	0f0000ef          	jal	400168 <_uart_getc>
+  40007c:	00050b93          	mv	s7,a0
+  400080:	0e8000ef          	jal	400168 <_uart_getc>
+  400084:	00851513          	slli	a0,a0,0x8
+  400088:	00abebb3          	or	s7,s7,a0
+  40008c:	07799a63          	bne	s3,s7,400100 <_crc_error>
+  400090:	3e800293          	li	t0,1000
+  400094:	0752ea63          	bltu	t0,s5,400108 <_range_error>
+  400098:	00397293          	andi	t0,s2,3
+  40009c:	00229293          	slli	t0,t0,0x2
+  4000a0:	00000317          	auipc	t1,0x0
+  4000a4:	10430313          	addi	t1,t1,260 # 4001a4 <tariff_base>
+  4000a8:	00530333          	add	t1,t1,t0
+  4000ac:	00032383          	lw	t2,0(t1)
+  4000b0:	01032e03          	lw	t3,16(t1)
+  4000b4:	035e0e33          	mul	t3,t3,s5
+  4000b8:	01c385b3          	add	a1,t2,t3
+  4000bc:	00497293          	andi	t0,s2,4
+  4000c0:	00028e63          	beqz	t0,4000dc <_charge>
+  4000c4:	000142b7          	lui	t0,0x14
+  4000c8:	02558333          	mul	t1,a1,t0
+  4000cc:	0255b3b3          	mulhu	t2,a1,t0
+  4000d0:	01035313          	srli	t1,t1,0x10
+  4000d4:	01039393          	slli	t2,t2,0x10
+  4000d8:	007365b3          	or	a1,t1,t2
+
+004000dc <_charge>:
+  4000dc:	00ba6a63          	bltu	s4,a1,4000f0 <_low_balance>
+  4000e0:	40ba0633          	sub	a2,s4,a1
+  4000e4:	00000513          	li	a0,0
+  4000e8:	01000693          	li	a3,16
+  4000ec:	02c0006f          	j	400118 <_respond>
+
+004000f0 <_low_balance>:
+  4000f0:	000a0613          	mv	a2,s4
+  4000f4:	00100513          	li	a0,1
+  4000f8:	02000693          	li	a3,32
+  4000fc:	01c0006f          	j	400118 <_respond>
+
+00400100 <_crc_error>:
+  400100:	00200513          	li	a0,2
+  400104:	0080006f          	j	40010c <_frame_error>
+
+00400108 <_range_error>:
+  400108:	00300513          	li	a0,3
+
+0040010c <_frame_error>:
+  40010c:	00000593          	li	a1,0
+  400110:	00000613          	li	a2,0
+  400114:	04000693          	li	a3,64
+
+00400118 <_respond>:
+  400118:	00d42023          	sw	a3,0(s0)
+  40011c:	00058c13          	mv	s8,a1
+  400120:	00060c93          	mv	s9,a2
+  400124:	060000ef          	jal	400184 <_uart_putc>
+  400128:	0ffc7513          	zext.b	a0,s8
+  40012c:	058000ef          	jal	400184 <_uart_putc>
+  400130:	008c5513          	srli	a0,s8,0x8
+  400134:	0ff57513          	zext.b	a0,a0
+  400138:	04c000ef          	jal	400184 <_uart_putc>
+  40013c:	00000b13          	li	s6,0
+  400140:	02000b93          	li	s7,32
+
+00400144 <_tx_balance>:
+  400144:	016cd533          	srl	a0,s9,s6
+  400148:	0ff57513          	zext.b	a0,a0
+  40014c:	038000ef          	jal	400184 <_uart_putc>
+  400150:	008b0b13          	addi	s6,s6,8
+  400154:	ff7b18e3          	bne	s6,s7,400144 <_tx_balance>
+
+00400158 <_wait_leave>:
+  400158:	00442283          	lw	t0,4(s0)
+  40015c:	0082f293          	andi	t0,t0,8
+  400160:	fe029ce3          	bnez	t0,400158 <_wait_leave>
+  400164:	eb1ff06f          	j	400014 <_idle>
+
+00400168 <_uart_getc>:
+  400168:	0084a283          	lw	t0,8(s1)
+  40016c:	0022f293          	andi	t0,t0,2
+  400170:	fe028ce3          	beqz	t0,400168 <_uart_getc>
+  400174:	0004a423          	sw	zero,8(s1)
+  400178:	0044a503          	lw	a0,4(s1)
+  40017c:	0ff57513          	zext.b	a0,a0
+  400180:	00008067          	ret
+
+00400184 <_uart_putc>:
+  400184:	0084a283          	lw	t0,8(s1)
+  400188:	0042f293          	andi	t0,t0,4
+  40018c:	fe028ce3          	beqz	t0,400184 <_uart_putc>
+  400190:	00a4a023          	sw	a0,0(s1)
+  400194:	0084a303          	lw	t1,8(s1)
+  400198:	00136313          	ori	t1,t1,1
+  40019c:	0064a423          	sw	t1,8(s1)
+  4001a0:	00008067          	ret
+
+004001a4 <tariff_base>:
+  4001a4:	0032                	.insn	2, 0x0032
+  4001a6:	0000                	.insn	2, 0x
+  4001a8:	0064                	.insn	2, 0x0064
+  4001aa:	0000                	.insn	2, 0x
+  4001ac:	0096                	.insn	2, 0x0096
+  4001ae:	0000                	.insn	2, 0x
+  4001b0:	001e                	.insn	2, 0x001e
+	...
+
+004001b4 <tariff_rate>:
+  4001b4:	000c                	.insn	2, 0x000c
+  4001b6:	0000                	.insn	2, 0x
+  4001b8:	0018                	.insn	2, 0x0018
+  4001ba:	0000                	.insn	2, 0x
+  4001bc:	0024                	.insn	2, 0x0024
+  4001be:	0000                	.insn	2, 0x
+  4001c0:	0006                	.insn	2, 0x0006
+	...
+
+Disassembly of section .riscv.attributes:
+
+00000000 <.riscv.attributes>:
+   0:	2241                	.insn	2, 0x2241
+   2:	0000                	.insn	2, 0x
+   4:	7200                	.insn	2, 0x7200
+   6:	7369                	.insn	2, 0x7369
+   8:	01007663          	bgeu	zero,a6,14 <OUT_GATE+0x4>
+   c:	0018                	.insn	2, 0x0018
+   e:	0000                	.insn	2, 0x
+  10:	7205                	.insn	2, 0x7205
+  12:	3376                	.insn	2, 0x3376
+  14:	6932                	.insn	2, 0x6932
+  16:	7032                	.insn	2, 0x7032
+  18:	5f31                	.insn	2, 0x5f31
+  1a:	6d7a                	.insn	2, 0x6d7a
+  1c:	756d                	.insn	2, 0x756d
+  1e:	316c                	.insn	2, 0x316c
+  20:	3070                	.insn	2, 0x3070
+	...

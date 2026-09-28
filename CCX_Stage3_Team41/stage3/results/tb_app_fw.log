@@ -1,0 +1,26 @@
+VCD info: dumpfile results/tb_app_fw.vcd opened for output.
+======================================================================================
+ TollGuard application firmware - Team 41 RV32I_Zmmul_Xicrc SoC
+ 7 vectors from scripts/tollguard_model.py | 50 MHz | UART 115200 8-N-1
+======================================================================================
+Pass A - emulator style (reset per vehicle, like one ./emu call)
+  [PASS] #0 in=0x08 bal=5000 km=25 crc=0x8411 | status=0 fare=350 sen new_bal=4650 lamps=0x10 | latency 172 cyc
+  [PASS] #1 in=0x0d bal=10000 km=120 crc=0xfa04 | status=0 fare=3725 sen new_bal=6275 lamps=0x10 | latency 196 cyc
+  [PASS] #2 in=0x0a bal=1000 km=80 crc=0x6807 | status=1 fare=3030 sen new_bal=1000 lamps=0x20 | latency 172 cyc
+  [PASS] #3 in=0x0f bal=123456 km=300 crc=0x3e91 | status=0 fare=2287 sen new_bal=121169 lamps=0x10 | latency 196 cyc
+  [PASS] #4 in=0x08 bal=170 km=10 crc=0x86f1 | status=0 fare=170 sen new_bal=0 lamps=0x10 | latency 172 cyc
+  [PASS] #5 in=0x08 bal=5000 km=25 crc=0xbeef | status=2 fare=0 sen new_bal=0 lamps=0x40 | latency 116 cyc
+  [PASS] #6 in=0x0a bal=900000 km=1500 crc=0x1490 | status=3 fare=0 sen new_bal=0 lamps=0x40 | latency 120 cyc
+Pass B - continuous gantry (single reset, vehicles back-to-back)
+  [PASS] #0 in=0x08 bal=5000 km=25 crc=0x8411 | status=0 fare=350 sen new_bal=4650 lamps=0x10 | latency 172 cyc
+  [PASS] #1 in=0x0d bal=10000 km=120 crc=0xfa04 | status=0 fare=3725 sen new_bal=6275 lamps=0x10 | latency 196 cyc
+  [PASS] #2 in=0x0a bal=1000 km=80 crc=0x6807 | status=1 fare=3030 sen new_bal=1000 lamps=0x20 | latency 172 cyc
+  [PASS] #3 in=0x0f bal=123456 km=300 crc=0x3e91 | status=0 fare=2287 sen new_bal=121169 lamps=0x10 | latency 196 cyc
+  [PASS] #4 in=0x08 bal=170 km=10 crc=0x86f1 | status=0 fare=170 sen new_bal=0 lamps=0x10 | latency 172 cyc
+  [PASS] #5 in=0x08 bal=5000 km=25 crc=0xbeef | status=2 fare=0 sen new_bal=0 lamps=0x40 | latency 116 cyc
+  [PASS] #6 in=0x0a bal=900000 km=1500 crc=0x1490 | status=3 fare=0 sen new_bal=0 lamps=0x40 | latency 120 cyc
+--------------------------------------------------------------------------------------
+[PASS] TollGuard: 98 checks passed, 7 vehicles x 2 passes, no illegal-instruction halt
+Simulated time 18794.57 us
+======================================================================================
+tb/tb_app_fw.v:217: $finish called at 18794575282 (1ps)
