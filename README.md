@@ -14,10 +14,12 @@ instruction)**. In Stage 3 the core gains two memory-mapped peripherals, **GPIO*
 
 | Result | Status | Evidence |
 |---|---|---|
-| Official GPIO & UART test firmware | **PASS** | [Section 3 log](testbench/pic/stage3_tb.png) |
-| GPIO block unit testbench | **PASS — 52 checks, 0 errors** | [log 1](testbench/pic/GPIO_tb_1.png) · [log 2](testbench/pic/GPIO_tb_2.png) · [log 3](testbench/pic/GPIO_tb_3.png) |
-| UART block unit testbench | **PASS — 73 checks, 0 errors** | [log 1](testbench/pic/UART_tb_1.png) · [log 2](testbench/pic/UART_tb_2.png) · [log 3](testbench/pic/UART_tb_3.png) |
-| TollGuard application testbench | **PASS — 112 checks** (7 scenarios × 2 passes) | [log](testbench/pic/tb_TOLLGUARD.png) |
+| Official GPIO & UART test firmware | **PASS** | [Section 3](#3-official-firmware-testbench) |
+| GPIO block unit testbench | **PASS — 52 checks, 0 errors** | [Section 3.1](#31-gpio-and-uart-block-testbenches) |
+| UART block unit testbench | **PASS — 73 checks, 0 errors** | [Section 3.1](#31-gpio-and-uart-block-testbenches) |
+| TollGuard application testbench | **PASS — 112 checks** (7 scenarios × 2 passes) | [Section 5](#5-tollguard-application-testbench) |
+
+All evidence below is shown as screenshots of the Vivado XSim console. The image files are in [`testbench/pic/`](testbench/pic).
 
 ---
 
@@ -96,7 +98,12 @@ formats the data on loads. The address decoder then selects the target.
 - A team check sends a byte with an invalid stop bit, which must be dropped with no
   echo. The next byte (`0x5C`) must still echo correctly.
 
-**Log (Vivado XSim):** [`testbench/pic/stage3_tb.png`](testbench/pic/stage3_tb.png)
+**Log (Vivado XSim):**
+
+![Official GPIO & UART firmware testbench - Vivado XSim log](testbench/pic/stage3_tb.png)
+
+<details>
+<summary>Same log as text</summary>
 
 ```
 [PASS] GPIO: P3-P0 = 0xa, P7-P4 = 0xa (gpio_out = 0xa0)   t = 815 ns
@@ -108,7 +115,50 @@ formats the data on loads. The address decoder then selects the target.
 [PASS] UART: RX = 0x5c, TX = 0x5c   t = 803615 ns
 [PASS] GPIO and UART firmware test completed successfully
 ```
+</details>
 
+### 3.1 GPIO and UART block testbenches
+
+Before the full system was tested, each peripheral was tested on its own.
+
+- **`tb_GPIO_equipe41.v`** covers:
+  - reset state;
+  - DATAOUT/DATADIR read-back;
+  - DATAIN reads only input pins;
+  - 2-clock synchroniser delay;
+  - DATAIN is read-only;
+  - reserved offsets;
+  - walking-one on DATADIR;
+  - direction changes;
+  - asynchronous reset.
+- **`tb_UART_equipe41.v`** covers:
+  - reset state and register access;
+  - 5 transmitted frames, decoded by an independent monitor;
+  - exact baud timing;
+  - receive at nominal and ±2 % baud;
+  - framing error (byte dropped, then recovery);
+  - glitch rejection;
+  - TX → RX loopback.
+
+**GPIO block — ALL TESTS PASSED (52 checks, 0 errors)**
+
+<p>
+  <img src="testbench/pic/GPIO_tb_1.png" width="32%" alt="GPIO testbench log part 1">
+  <img src="testbench/pic/GPIO_tb_2.png" width="32%" alt="GPIO testbench log part 2">
+  <img src="testbench/pic/GPIO_tb_3.png" width="32%" alt="GPIO testbench log part 3">
+</p>
+
+**UART block — ALL TESTS PASSED (73 checks, 0 errors)**
+
+<p>
+  <img src="testbench/pic/UART_tb_1.png" width="32%" alt="UART testbench log part 1">
+  <img src="testbench/pic/UART_tb_2.png" width="32%" alt="UART testbench log part 2">
+  <img src="testbench/pic/UART_tb_3.png" width="32%" alt="UART testbench log part 3">
+</p>
+
+*Click an image to open it at full size.*
+
+---
 ---
 
 ## 4. TollGuard application
@@ -182,8 +232,9 @@ P7–P4 against pre-computed expected values.
 | 5 | Car, tampered frame (bad CRC) | `0x08` | CRC_ERROR | 0 | 0 | `0x40` FRAMEERR |
 | 6 | Lorry, 1500 km (out of range) | `0x0A` | OUT_OF_RANGE | 0 | 0 | `0x40` FRAMEERR |
 
-**Log (Vivado XSim):** [`testbench/pic/tb_TOLLGUARD.png`](testbench/pic/tb_TOLLGUARD.png) —
-`[PASS] TollGuard: 112 checks passed`
+**Log (Vivado XSim) — `[PASS] TollGuard: 112 checks passed`:**
+
+![TollGuard application testbench - Vivado XSim log](testbench/pic/tb_TOLLGUARD.png)
 
 ---
 
