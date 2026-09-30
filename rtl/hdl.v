@@ -1514,7 +1514,7 @@ endmodule
 //  ---------- INLCUDED BLOCK: MemoryUnit_SoC_equipe41  ---------- 
 // ============================================================================
 // BLOCK: MemoryUnit_SoC_equipe41   (ChipInventor block - Stage 3, Team 41)
-// IMEM FIRMWARE IN THIS FILE: official GPIO/UART test firmware
+//TollGuard application firmware IN THIS FILE: official GPIO/UART test firmware
 //
 // Replaces the Stage 2 block MemoryUnit_ff_equipe41. The six core-side ports
 // are IDENTICAL to Stage 2, so connect them to the same wires as before:
