@@ -238,7 +238,7 @@ P7–P4 against pre-computed expected values.
 
 ---
 
-## 6. Emulator commands (`./emu`, AWS stage)
+## 6. Emulator commands (`./emu`)
 
 Each `./emu` call is one vehicle, because the emulator resets the processor on every call.
 
