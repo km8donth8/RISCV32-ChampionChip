@@ -262,35 +262,6 @@ Each `./emu` call is one vehicle, because the emulator resets the processor on e
 
 ---
 
-## 7. How to simulate
 
-- **Top module:** `stage3_top_old`. Its ports are `clk`, `rst_n`, `o_halt`, `gpio_in[7:0]`,
-  `gpio_out[7:0]`, `gpio_oe[7:0]`, `uart_rx_i`, `uart_tx_o`.
-- The two RTL files are the same design; only the firmware in IMEM differs.
-
-| Testbench | RTL file | Expected result | Sim time |
-|---|---|---|---|
-| `tb_OFFICIAL_stage3.v` | `rtl/hdl_OFFICIAL_TEST_FW.v` | `[PASS] GPIO and UART firmware test completed successfully` | ~0.82 ms |
-| `tb_TollGuard_Application.v` | `rtl/hdl.v` | `[PASS] TollGuard: 112 checks passed` | ~19 ms |
-| `tb_GPIO_equipe41.v` | `rtl/hdl.v` | `ALL TESTS PASSED (52 checks, 0 errors)` | <1 µs |
-| `tb_UART_equipe41.v` | `rtl/hdl.v` | `ALL TESTS PASSED (73 checks, 0 errors)` | ~2 ms |
-
-**Vivado XSim:** add the RTL file and the testbench as simulation sources, set the testbench
-as top, then `run all`.
-
-**Icarus Verilog:**
-```bash
-iverilog -g2012 -o off testbench/tb_OFFICIAL_stage3.v rtl/hdl_OFFICIAL_TEST_FW.v && vvp off
-iverilog -g2012 -o app testbench/tb_TollGuard_Application.v rtl/hdl.v && vvp app
-iverilog -g2012 -s tb_GPIO_equipe41 -o gpio testbench/tb_GPIO_equipe41.v rtl/hdl.v && vvp gpio
-iverilog -g2012 -s tb_UART_equipe41 -o uart testbench/tb_UART_equipe41.v rtl/hdl.v && vvp uart
-```
-
-**Firmware:** the `.s` files are assembled with the organisers' RVBL-Firmware-Builder
-Makefile (`-march=rv32i_zmmul`). The official firmware is the organisers' file, used
-unchanged.
-
-**Note on ChipInventor:** the block diagram and design were built in ChipInventor. At
-115200 baud one UART byte takes ~87 µs, and ChipInventor's simulator stops at about
 134 µs, before the first UART echo (167 µs). Full-length runs were therefore done in
 Vivado XSim, using the same `hdl.v` exported from ChipInventor.
