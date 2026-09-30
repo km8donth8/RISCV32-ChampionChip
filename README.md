@@ -19,7 +19,7 @@ instruction)**. In Stage 3 the core gains two memory-mapped peripherals, **GPIO*
 | UART block unit testbench | **PASS — 73 checks, 0 errors** | [Section 3.1](#31-gpio-and-uart-block-testbenches) |
 | TollGuard application testbench | **PASS — 112 checks** (7 scenarios × 2 passes) | [Section 5](#5-tollguard-application-testbench) |
 
-All evidence below is shown as screenshots of the Vivado XSim console. The image files are in [`testbench/pic/`](testbench/pic).
+All evidence below is shown as screenshots of the console. The image files are in [`testbench/pic/`](testbench/pic).
 
 ---
 
@@ -43,7 +43,7 @@ testbench/
   tb_TollGuard_Application.v         TollGuard application testbench    (run with rtl/hdl.v)
   tb_GPIO_equipe41.v                 GPIO block unit testbench
   tb_UART_equipe41.v                 UART block unit testbench
-  pic/                               Simulation logs and waveforms (Vivado XSim)
+  pic/                               Simulation logs and waveforms
 ```
 
 ---
@@ -98,9 +98,9 @@ formats the data on loads. The address decoder then selects the target.
 - A team check sends a byte with an invalid stop bit, which must be dropped with no
   echo. The next byte (`0x5C`) must still echo correctly.
 
-**Log (Vivado XSim):**
+**Log :**
 
-![Official GPIO & UART firmware testbench - Vivado XSim log](testbench/pic/stage3_tb.png)
+![Official GPIO & UART firmware testbench - log](testbench/pic/stage3_tb.png)
 
 <details>
 <summary>Same log as text</summary>
@@ -232,9 +232,9 @@ P7–P4 against pre-computed expected values.
 | 5 | Car, tampered frame (bad CRC) | `0x08` | CRC_ERROR | 0 | 0 | `0x40` FRAMEERR |
 | 6 | Lorry, 1500 km (out of range) | `0x0A` | OUT_OF_RANGE | 0 | 0 | `0x40` FRAMEERR |
 
-**Log (Vivado XSim) — `[PASS] TollGuard: 112 checks passed`:**
+**Log — `[PASS] TollGuard: 112 checks passed`:**
 
-![TollGuard application testbench - Vivado XSim log](testbench/pic/tb_TOLLGUARD.png)
+![TollGuard application testbench - log](testbench/pic/tb_TOLLGUARD.png)
 
 ---
 
@@ -263,5 +263,3 @@ Each `./emu` call is one vehicle, because the emulator resets the processor on e
 ---
 
 
-134 µs, before the first UART echo (167 µs). Full-length runs were therefore done in
-Vivado XSim, using the same `hdl.v` exported from ChipInventor.
